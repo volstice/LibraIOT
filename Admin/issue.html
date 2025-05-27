@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Issue Books - Admin Panel - LIBRAIOT</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="issue-style.css">
+    <link rel="stylesheet" href="sidebar-style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="issue.js" type="module" defer></script>
+    <!--<script src="route-protector.js" type="module" defer></script>
+    <script src="auth-handler.js" type="module" defer></script>--!>
+</head>
+<body>
+    <!-- Left Sidebar Navigation -->
+    <aside class="sidebar glass-effect">
+        <div class="sidebar-header">
+            <div class="logo">
+                <span class="logo-text">LIBRAIOT</span>
+                <i class="fas fa-book-reader logo-icon"></i>
+            </div>
+            <div class="sidebar-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+        <div class="sidebar-user">
+            <div class="user-avatar">
+                <i class="fas fa-user-shield"></i>
+            </div>
+            <div class="user-info">
+                <p class="user-role">Admin Panel</p>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <ul>
+                <li>
+                    <a href="access.html">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="add-books.html">
+                        <i class="fas fa-book-medical"></i>
+                        <span>Add Books</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="issue.html">
+                        <i class="fas fa-book-reader"></i>
+                        <span>Issue Books</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="user-database.html">
+                        <i class="fas fa-users"></i>
+                        <span>User Database</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="books-database.html">
+                        <i class="fas fa-table"></i>
+                        <span>Manage Books</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="manage-tables.html">
+                        <span class="material-symbols-outlined">table_restaurant</span>
+                        <span>Manage Tables</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="#" id="sidebar-settings">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </a>
+            <a href="../main.html" id="sidebar-logout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Exit Admin</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <div class="top-bar glass-effect">
+            <div class="page-title">
+                <h1>Issue Books</h1>
+            </div>
+            <div class="top-actions">
+                <a href="#" class="search-toggle">
+                    <i class="fas fa-search"></i>
+                </a>
+                <a href="#" class="user-menu-toggle">
+                    <i class="fas fa-user-shield"></i>
+                </a>
+            </div>
+
+            <!-- User Dropdown -->
+            <div class="user-dropdown glass-effect">
+                <div class="dropdown-header">
+                    <i class="fas fa-user-shield"></i>
+                    <span>Admin</span>
+                </div>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item"><i class="fas fa-cog"></i> Settings</a>
+                <a href="../main.html" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Exit Admin Panel</a>
+            </div>
+        </div>
+
+        <!-- Issue Books Section -->
+        <section class="admin-section">
+            <div class="admin-container glass-effect">
+                <h2>Issue Books to Users</h2>
+                <p class="subtitle">Manage book assignments for library members</p>
+
+                <div class="form-section">
+                    <div class="form-group">
+                        <h3>User Information</h3>
+                        <div class="input-group">
+                            <label for="membershipId">User ID</label>
+                            <div class="search-input">
+                                <input type="text" id="membershipId" placeholder="Enter membership ID (e.g. LIB-174458)">
+                                <button id="searchUser" class="button dark">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="userDetails" class="details-container hidden">
+                            <div class="details-group">
+                                <label>Full Name</label>
+                                <input type="text" id="userName" readonly>
+                            </div>
+                            <div class="details-group">
+                                <label>Email</label>
+                                <input type="text" id="userEmail" readonly>
+                            </div>
+                            <div class="details-group">
+                                <label>Membership Status</label>
+                                <input type="text" id="membershipStatus" readonly>
+                            </div>
+                            <div class="details-group">
+                                <label>Expiry Date</label>
+                                <input type="text" id="expiryDate" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <h3>Book Information</h3>
+                        <div class="input-group">
+                            <label for="bookIsbn">ISBN</label>
+                            <div class="search-input">
+                                <input type="text" id="bookIsbn" placeholder="Enter book ISBN (e.g. 9780062259660)">
+                                <button id="searchBook" class="button dark">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="bookDetails" class="details-container hidden">
+                            <div class="book-preview">
+                                <img id="bookCover" src="/api/placeholder/120/180" alt="Book cover">
+                                <div class="book-info">
+                                    <div class="details-group">
+                                        <label>Title</label>
+                                        <input type="text" id="bookTitle" readonly>
+                                    </div>
+                                    <div class="details-group">
+                                        <label>Author</label>
+                                        <input type="text" id="bookAuthor" readonly>
+                                    </div>
+                                    <div class="details-group">
+                                        <label>Publisher</label>
+                                        <input type="text" id="bookPublisher" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <h3>Issue Details</h3>
+                        <div class="date-container">
+                            <div class="details-group">
+                                <label for="issueDate">Issue Date</label>
+                                <input type="date" id="issueDate">
+                            </div>
+                            <div class="details-group">
+                                <label for="returnDate">Return Date</label>
+                                <input type="date" id="returnDate">
+                            </div>
+                        </div>
+                        <div class="details-group">
+                            <label for="notes">Notes</label>
+                            <textarea id="notes" placeholder="Any special instructions or notes..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button id="issueBook" class="button dark">Issue Book</button>
+                        <button id="resetForm" class="button light">Reset</button>
+                    </div>
+                </div>
+
+                <div id="issueHistoryContainer" class="recent-issues glass-effect hidden">
+                    <div class="history-header">
+                        <h3>Recent Issues</h3>
+                        <a href="all-issues.html" class="button dark">
+                            <i class="fas fa-history"></i> All Issues
+                        </a>
+                    </div>
+                    <table id="issueHistoryTable">
+                        <thead>
+                            <tr>
+                                <th>User ID</th>
+                                <th>Book Title</th>
+                                <th>Issue Date</th>
+                                <th>Return Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="issueHistoryBody">
+                            <!-- This will be filled dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Success Modal -->
+        <div id="successModal" class="modal">
+            <div class="modal-content glass-effect">
+                <div class="modal-header">
+                    <h3><i class="fas fa-check-circle"></i> Success</h3>
+                    <span class="close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <p>Book has been successfully issued to the user.</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="button dark" id="modalOkButton">OK</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Error Modal -->
+        <div id="errorModal" class="modal">
+            <div class="modal-content glass-effect">
+                <div class="modal-header">
+                    <h3><i class="fas fa-exclamation-circle"></i> Error</h3>
+                    <span class="close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <p id="errorMessage">There was an error processing your request.</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="button dark" id="modalCloseButton">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="glass-effect">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>PROJECT LIBRAIOT</h3>
+                    <p>Admin Panel</p>
+                </div>
+                <div class="footer-section">
+                    <p><i class="fas fa-phone"></i> 921-142-0420</p>
+                    <p><i class="fas fa-envelope"></i> admin@libraiot.com</p>
+                    <p><a href="t&c.html" style="color: inherit; text-decoration: none;"><i class="fas fa-file-contract"></i> Terms & Conditions</a></p>
+                </div>
+                <div class="footer-section">
+                    <p><i class="fas fa-map-marker-alt"></i> 420, Nala Sopara</p>
+                    <p>7th Floor, Mumbai, IN</p>
+                    <p>401201</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Project LIBRAIOT. All rights reserved.</p>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        // Sidebar toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.querySelector('.sidebar');
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const mainContent = document.querySelector('.main-content');
+
+            sidebarToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('collapsed');
+                mainContent.classList.toggle('expanded');
+            });
+
+            // User dropdown functionality
+            const userMenuToggle = document.querySelector('.user-menu-toggle');
+            const userDropdown = document.querySelector('.user-dropdown');
+
+            userMenuToggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                userDropdown.classList.toggle('active');
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.user-menu-toggle') && !e.target.closest('.user-dropdown')) {
+                    userDropdown.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

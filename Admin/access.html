@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Access Panel - LIBRAIOT Admin</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="access-style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!--<script src="admin-access.js" type="module" defer></script>--!>
+    <!-- Adding this script for hamburger menu functionality -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hamburger menu toggle
+            const menuToggle = document.querySelector('.menu-toggle-container');
+            const mobileMenu = document.querySelector('.mobile-menu');
+
+            menuToggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                mobileMenu.classList.toggle('active');
+            });
+
+            // User dropdown toggle
+            const userIcon = document.querySelector('.user-icon');
+            const userDropdown = document.querySelector('.user-dropdown');
+
+            userIcon.addEventListener('click', function(e) {
+                e.preventDefault();
+                userDropdown.classList.toggle('active');
+            });
+
+            // Close menus when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!menuToggle.contains(e.target) && !mobileMenu.contains(e.target)) {
+                    mobileMenu.classList.remove('active');
+                }
+
+                if (!userIcon.contains(e.target) && !userDropdown.contains(e.target)) {
+                    userDropdown.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">LIBRAIOT ADMIN</div>
+        <div class="nav-links">
+            <a href="access.html" class="nav-link">Dashboard</a>
+            <a href="add-books.html" class="nav-link">Add Books</a>
+            <a href="issue.html" class="nav-link">Issue Books</a>
+            <a href="manage-users.html" class="nav-link">Manage Users</a>
+        </div>
+        <div class="nav-icons">
+            <a href="#" class="nav-icon menu-toggle-container">
+                <i class="fas fa-bars menu-toggle"></i>
+            </a>
+            <a href="#" class="nav-icon user-icon">
+                <i class="fas fa-user-shield"></i>
+            </a>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu glass-effect">
+            <a href="access.html">Dashboard</a>
+            <a href="add-books.html">Add Books</a>
+            <a href="books-database.html">Manage Books</a>
+            <a href="user-database.html">Manage Users</a>
+            <div class="mobile-menu-extras">
+                <a href="#"><i class="fas fa-search"></i> Search</a>
+                <a href="#"><i class="fas fa-cog"></i> Settings</a>
+                <a href="../main.html"><i class="fas fa-sign-out-alt"></i> Exit Admin Panel</a>
+            </div>
+        </div>
+
+        <!-- User Dropdown -->
+        <div class="user-dropdown glass-effect">
+            <div class="dropdown-header">
+                <i class="fas fa-user-shield"></i>
+                <span>Admin</span>
+            </div>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item"><i class="fas fa-cog"></i> Settings</a>
+            <a href="../main.html" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Exit Admin Panel</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <h1>Admin Access Panel</h1>
+        <p class="subtitle">Centralized access to library management tools</p>
+
+        <div class="access-panel glass-effect">
+            <h2>Access Panel</h2>
+
+            <div class="access-grid">
+                <a href="issue.html" class="access-card glass-effect">
+                    <div class="access-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="access-title">Issue Books</div>
+                    <div class="access-description">Manage book lending to library members</div>
+                </a>
+
+                <a href="user-database.html" class="access-card glass-effect">
+                    <div class="access-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="access-title">User Database</div>
+                    <div class="access-description">Browse and manage registered users</div>
+                </a>
+
+                <a href="all-issues.html" class="access-card glass-effect">
+                    <div class="access-icon">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <div class="access-title">Issue Database</div>
+                    <div class="access-description">Track all book borrowing activity</div>
+                </a>
+
+                <a href="logs.html" class="access-card glass-effect">
+                    <div class="access-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="access-title">Logs</div>
+                    <div class="access-description">View system activity and audit trails</div>
+                </a>
+
+                <a href="books-database.html" class="access-card glass-effect">
+                    <div class="access-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="access-title">Books Database</div>
+                    <div class="access-description">Complete catalog of library resources</div>
+                </a>
+
+                <a href="manage-tables.html" class="access-card glass-effect">
+                    <div class="access-icon">
+                        <span class="material-symbols-outlined">table_restaurant</span>
+                    </div>
+                    <div class="access-title">Manage Tables</div>
+                    <div class="access-description">Configure database structure and relations</div>
+                </a>
+            </div>
+        </div>
+
+        <div class="system-stats glass-effect">
+            <h2>System Status</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <div class="stat-number">345</div>
+                    <div class="stat-label">Books Issued</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-undo"></i>
+                    </div>
+                    <div class="stat-number">28</div>
+                    <div class="stat-label">Returns Pending</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-number">1,245</div>
+                    <div class="stat-label">Active Users</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="stat-number">15</div>
+                    <div class="stat-label">Overdue Books</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="glass-effect">
+        <div class="footer-bottom">
+            <p>&copy; 2025 Project LIBRAIOT. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

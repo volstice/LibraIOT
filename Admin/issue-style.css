@@ -1,0 +1,559 @@
+/* Main Content Styles */
+.main-container {
+    padding: 120px 20px 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.main-container h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #fff;
+    text-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    text-align: center;
+    margin-bottom: 40px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Issue Container */
+.issue-container {
+    padding: 40px;
+    margin-bottom: 40px;
+}
+
+.form-section {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.form-group {
+    width: 100%;
+}
+
+.form-group h3 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+    font-weight: 300;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.search-input {
+    display: flex;
+    gap: 10px;
+}
+
+.search-input input {
+    flex: 1;
+    padding: 12px 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    color: #fff;
+    font-size: 1rem;
+}
+
+.search-input input:focus {
+    outline: none;
+    border-color: rgba(0, 255, 255, 0.5);
+    box-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
+}
+
+.search-input .button {
+    margin-top: 0;
+    padding: 12px 20px;
+}
+
+/* Details Container */
+.details-container {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.details-container.hidden {
+    display: none;
+}
+
+.details-group {
+    margin-bottom: 15px;
+}
+
+.details-group label {
+    display: block;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.details-group input,
+.details-group textarea {
+    width: 100%;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    color: #fff;
+    font-size: 1rem;
+}
+
+.details-group input[readonly] {
+    background: rgba(0, 0, 0, 0.2);
+    cursor: not-allowed;
+}
+
+.details-group textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Book Preview */
+.book-preview {
+    display: flex;
+    gap: 20px;
+}
+
+.book-preview img {
+    width: 120px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 5px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.book-info {
+    flex: 1;
+}
+
+/* Date Container */
+.date-container {
+    display: flex;
+    gap: 20px;
+}
+
+.date-container .details-group {
+    flex: 1;
+}
+
+/* Button Group */
+.button-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.button-group .button {
+    margin-top: 0;
+}
+
+/* Recent Issues Table */
+.recent-issues {
+    padding: 30px;
+    margin-top: 40px;
+}
+
+.recent-issues h3 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+    font-weight: 300;
+}
+
+.recent-issues.hidden {
+    display: none;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+table th, table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+table th {
+    font-weight: 400;
+    color: rgba(0, 255, 255, 0.8);
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+table tbody tr {
+    transition: background-color 0.3s ease;
+}
+
+table tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Status Badges */
+.status-badge {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.status-issued {
+    background-color: rgba(255, 193, 7, 0.2);
+    color: #ffc107;
+}
+
+.status-returned {
+    background-color: rgba(40, 167, 69, 0.2);
+    color: #28a745;
+}
+
+.status-overdue {
+    background-color: rgba(220, 53, 69, 0.2);
+    color: #dc3545;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    position: relative;
+    margin: 10% auto;
+    max-width: 500px;
+    animation: modalFadeIn 0.3s ease;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 20px 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-header h3 {
+    font-size: 1.5rem;
+    color: #fff;
+    font-weight: 300;
+}
+
+.modal-header h3 i {
+    margin-right: 10px;
+    color: #0ff;
+}
+
+.modal-header .close {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.modal-header .close:hover {
+    color: #fff;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.modal-footer {
+    padding: 10px 20px 20px;
+    text-align: right;
+}
+
+.modal-footer .button {
+    margin-top: 0;
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .date-container {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-container {
+        padding: 100px 15px 40px;
+    }
+
+    .issue-container {
+        padding: 25px;
+    }
+
+    .book-preview {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 15px;
+    }
+
+    .book-info {
+        width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .button-group {
+        flex-direction: column;
+    }
+
+    .button-group .button {
+        width: 100%;
+    }
+
+    table th, table td {
+        padding: 8px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Add these styles to your issue-style.css file */
+
+/* Center the main content in the issue books page */
+.admin-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Form section styling - centered */
+.form-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.form-group {
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 25px;
+}
+
+/* Center the heading elements */
+.admin-container h2,
+.admin-container .admin-subtitle {
+    text-align: center;
+}
+
+/* Center the input groups and make them consistent width */
+.input-group,
+.details-group,
+.date-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto 15px auto;
+}
+
+/* Make the search inputs and buttons look like Image 1 */
+.search-input {
+    display: flex;
+    width: 100%;
+}
+
+.search-input input {
+    flex: 1;
+}
+
+/* Center the details containers */
+.details-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+/* Center the book details container and its preview */
+.book-preview {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    width: 100%;
+}
+
+.book-info {
+    flex: 1;
+    max-width: 600px;
+}
+
+/* Center the buttons */
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    width: 100%;
+    margin: 25px 0;
+}
+
+/* Recent issues table centering */
+#issueHistoryContainer {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+#issueHistoryTable {
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* Textarea for notes - make it full width */
+#notes {
+    width: 100%;
+    min-height: 100px;
+}
+
+/* Ensure date inputs have consistent styling */
+.date-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.date-container .details-group {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+/* Make sure the form fields have consistent padding */
+input[type="text"],
+input[type="date"],
+textarea {
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.3);
+    color: white;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Style the issue/reset buttons to match the design in Image 1 */
+.button {
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    min-width: 120px;
+    transition: all 0.3s ease;
+}
+
+.button.dark {
+    background: rgba(0, 255, 255, 0.2);
+    color: #fff;
+    border: 1px solid rgba(0, 255, 255, 0.3);
+}
+
+.button.light {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.button.dark:hover {
+    background: rgba(0, 255, 255, 0.3);
+}
+
+.button.light:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .date-container {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .book-preview {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .book-info {
+        width: 100%;
+    }
+}
+
+/* Add this to your issue-style.css file */
+
+/* History header with title and button */
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+
+}
+
+.history-header h3 {
+    margin-bottom: 0; /* Override existing margin */
+}
+
+.history-header .button {
+    margin: 0;
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    text-decoration: none;
+    color: inherit;
+}
+
+.history-header .button i {
+    margin-right: 5px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .history-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .history-header .button {
+        width: 100%;
+        text-align: center;
+    }
+}

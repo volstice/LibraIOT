@@ -1,0 +1,582 @@
+/* Sidebar and Main Content Layout */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #000;
+    background-image: radial-gradient(circle at 50% 50%, rgba(0, 255, 255, 0.1) 0%, transparent 70%);
+    color: #fff;
+    display: flex;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 260px;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar.collapsed {
+    width: 80px;
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-header .logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0ff;
+    text-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+}
+
+.sidebar-toggle {
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.8);
+    transition: color 0.3s ease;
+}
+
+.sidebar-toggle:hover {
+    color: #0ff;
+}
+
+.sidebar-user {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(0, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: #0ff;
+    margin-right: 12px;
+}
+
+.user-info {
+    overflow: hidden;
+}
+
+.user-role {
+    font-size: 0.85rem;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.sidebar-nav {
+    flex: 1;
+    padding-top: 20px;
+    overflow-y: auto;
+}
+
+.sidebar-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-nav li {
+    margin-bottom: 5px;
+}
+
+.sidebar-nav a {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
+}
+
+.sidebar-nav a i {
+    font-size: 1.1rem;
+    width: 20px;
+    margin-right: 15px;
+    text-align: center;
+}
+
+.sidebar-nav a span {
+    white-space: nowrap;
+    overflow: hidden;
+    transition: opacity 0.3s ease;
+}
+
+.sidebar-nav li.active a {
+    background: rgba(0, 255, 255, 0.1);
+    color: #0ff;
+    border-left-color: #0ff;
+}
+
+.sidebar-nav a:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+}
+
+.sidebar-footer {
+    padding: 15px 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+}
+
+.sidebar-footer a {
+    display: flex;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.sidebar-footer a i {
+    margin-right: 8px;
+}
+
+.sidebar-footer a:hover {
+    color: #0ff;
+}
+
+/* When sidebar is collapsed */
+.sidebar.collapsed .logo {
+    font-size: 1.2rem;
+}
+
+.sidebar.collapsed .user-info,
+.sidebar.collapsed .sidebar-nav a span,
+.sidebar.collapsed .sidebar-footer a span {
+    opacity: 0;
+    visibility: hidden;
+    width: 0;
+}
+
+.sidebar.collapsed .sidebar-nav a {
+    justify-content: center;
+    padding: 15px 0;
+}
+
+.sidebar.collapsed .sidebar-nav a i {
+    margin-right: 0;
+    font-size: 1.3rem;
+}
+
+.sidebar.collapsed .sidebar-footer {
+    justify-content: center;
+}
+
+.sidebar.collapsed .sidebar-footer a {
+    padding: 8px;
+    margin: 0 5px;
+}
+
+.sidebar.collapsed .sidebar-footer a i {
+    margin-right: 0;
+    font-size: 1.1rem;
+}
+
+/* Main Content Styles */
+.main-content {
+    flex: 1;
+    margin-left: 260px;
+    transition: margin-left 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main-content.expanded {
+    margin-left: 80px;
+}
+
+/* Top Bar Styles */
+.top-bar {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+    position: sticky;
+    top: 0;
+    z-index: 900;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.page-title h1 {
+    font-size: 1.8rem;
+    margin: 0;
+    font-weight: 400;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+}
+
+.top-actions {
+    display: flex;
+    align-items: center;
+}
+
+.top-actions a {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin-left: 20px;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.top-actions a:hover {
+    color: #0ff;
+}
+
+/* User Dropdown Styles */
+.user-dropdown {
+    position: absolute;
+    top: 70px;
+    right: 20px;
+    width: 220px;
+    z-index: 1000;
+    padding: 15px 0;
+    display: none;
+    animation: fadeIn 0.2s ease;
+}
+
+.user-dropdown.active {
+    display: block;
+}
+
+.dropdown-header {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dropdown-header i {
+    font-size: 1.2rem;
+    color: #0ff;
+    margin-right: 10px;
+}
+
+.dropdown-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 5px 0;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-item i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+}
+
+.dropdown-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+}
+
+/* Glass Effect Style */
+.glass-effect {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+/* Modified Admin Section to fit with sidebar */
+.admin-section {
+    flex: 1;
+    padding: 30px;
+    overflow-y: auto;
+}
+
+.admin-container {
+    border-radius: 10px;
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+/* Footer adjustments */
+footer {
+    margin-top: auto;
+    border-radius: 10px 10px 0 0;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+    .sidebar {
+        width: 80px;
+    }
+
+    .sidebar .logo,
+    .sidebar .user-info,
+    .sidebar-nav a span,
+    .sidebar-footer a span {
+        opacity: 0;
+        visibility: hidden;
+        width: 0;
+    }
+
+    .sidebar-nav a {
+        justify-content: center;
+        padding: 15px 0;
+    }
+
+    .sidebar-nav a i {
+        margin-right: 0;
+        font-size: 1.3rem;
+    }
+
+    .main-content {
+        margin-left: 80px;
+    }
+
+    /* Show full sidebar when hover on mobile/tablet */
+    .sidebar:hover {
+        width: 260px;
+    }
+
+    .sidebar:hover .logo,
+    .sidebar:hover .user-info,
+    .sidebar:hover .sidebar-nav a span,
+    .sidebar:hover .sidebar-footer a span {
+        opacity: 1;
+        visibility: visible;
+        width: auto;
+    }
+
+    .sidebar:hover .sidebar-nav a {
+        justify-content: flex-start;
+        padding: 12px 20px;
+    }
+
+    .sidebar:hover .sidebar-nav a i {
+        margin-right: 15px;
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        position: fixed;
+        width: 260px;
+    }
+
+    .sidebar.active {
+        transform: translateX(0);
+    }
+
+    .sidebar .logo,
+    .sidebar .user-info,
+    .sidebar-nav a span,
+    .sidebar-footer a span {
+        opacity: 1;
+        visibility: visible;
+        width: auto;
+    }
+
+    .sidebar-nav a {
+        justify-content: flex-start;
+        padding: 12px 20px;
+    }
+
+    .sidebar-nav a i {
+        margin-right: 15px;
+        font-size: 1.1rem;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    .top-bar {
+        padding: 0 15px;
+    }
+
+    .page-title h1 {
+        font-size: 1.5rem;
+    }
+
+    .admin-section {
+        padding: 20px 15px;
+    }
+
+    .admin-container {
+        padding: 20px;
+    }
+}
+
+/* Additional styles for the form to work with sidebar */
+.form-columns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.form-column {
+    flex: 1;
+    min-width: 300px;
+}
+
+@media (max-width: 768px) {
+    .form-columns {
+        flex-direction: column;
+    }
+
+    .form-column {
+        min-width: 100%;
+    }
+}
+
+
+/* Fix for title overlapping when sidebar is collapsed */
+.main-content.expanded .top-bar .page-title h1 {
+    margin-left: 10px; /* Add some margin when sidebar is collapsed */
+    transition: margin-left 0.3s ease; /* Smooth transition */
+}
+
+/* Ensure the title is properly positioned in all states */
+.top-bar .page-title h1 {
+    position: relative;
+    z-index: 10; /* Ensure title stays above other elements */
+    margin-left: 0;
+    transition: margin-left 0.3s ease;
+}
+
+/* Adjust top bar padding when sidebar is collapsed */
+.main-content.expanded .top-bar {
+    padding-left: 15px;
+}
+
+/* For smaller screens */
+@media (max-width: 768px) {
+    .main-content .top-bar .page-title h1 {
+        margin-left: 10px;
+    }
+}
+
+.sidebar-header .logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0ff;
+    text-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+}
+
+/* Text logo styling */
+.logo-text {
+    transition: opacity 0.3s ease, width 0.3s ease;
+}
+
+/* Icon logo styling */
+.logo-icon {
+    font-size: 1.5rem;
+    opacity: 0;
+    width: 0;
+    overflow: hidden;
+    transition: opacity 0.3s ease, width 0.3s ease;
+}
+
+/* When sidebar is collapsed, hide text and show icon */
+.sidebar.collapsed .logo-text {
+    opacity: 0;
+    width: 0;
+    visibility: hidden;
+}
+
+.sidebar.collapsed .logo-icon {
+    opacity: 1;
+    width: auto;
+    visibility: visible;
+    margin-left: 5px; /* Center icon in the collapsed space */
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .sidebar .logo-text {
+        opacity: 0;
+        width: 0;
+        visibility: hidden;
+    }
+
+    .sidebar .logo-icon {
+        opacity: 1;
+        width: auto;
+        visibility: visible;
+    }
+
+    .sidebar:hover .logo-text {
+        opacity: 1;
+        width: auto;
+        visibility: visible;
+    }
+}
+
+/* Add this to your sidebar-style.css file to fix the Material Symbols icon alignment */
+.sidebar-nav .material-symbols-outlined {
+    font-size: 1.3rem;  /* Match size of other icons */
+    width: 20px;        /* Match width of other icons */
+    margin-right: 15px; /* Match spacing of other icons */
+    text-align: center;
+    vertical-align: -2px; /* Fine-tune vertical alignment */
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Update this style for collapsed sidebar state */
+.sidebar.collapsed .sidebar-nav .material-symbols-outlined {
+    margin-right: 0;
+    font-size: 1.3rem; /* Match the enlarged size of other icons in collapsed state */
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Update this for responsive behavior */
+@media (max-width: 992px) {
+    .sidebar-nav .material-symbols-outlined {
+        margin-right: 0;
+        font-size: 1.3rem;
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    .sidebar:hover .sidebar-nav .material-symbols-outlined {
+        margin-right: 15px;
+        font-size: 1.1rem;
+        color: rgba(255, 255, 255, 0.8);
+    }
+}

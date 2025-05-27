@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Tables - Admin Panel - LIBRAIOT</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="manage-tables-style.css">
+    <link rel="stylesheet" href="sidebar-style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="manage-tables.js" type="module" defer></script>
+</head>
+<body>
+    <!-- Left Sidebar Navigation -->
+    <aside class="sidebar glass-effect">
+        <div class="sidebar-header">
+            <div class="logo">
+                <span class="logo-text">LIBRAIOT</span>
+                <i class="fas fa-book-reader logo-icon"></i>
+            </div>
+            <div class="sidebar-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+        <div class="sidebar-user">
+            <div class="user-avatar">
+                <i class="fas fa-user-shield"></i>
+            </div>
+            <div class="user-info">
+                <p class="user-role">Admin Panel</p>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <ul>
+                <li>
+                    <a href="access.html">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="add-books.html">
+                        <i class="fas fa-book-medical"></i>
+                        <span>Add Books</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="issue.html">
+                        <i class="fas fa-book-reader"></i>
+                        <span>Issue Books</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="user-database.html">
+                        <i class="fas fa-users"></i>
+                        <span>User Database</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="books-database.html">
+                        <i class="fas fa-table"></i>
+                        <span>Manage Books</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="manage-tables.html">
+                        <span class="material-symbols-outlined">table_restaurant</span>
+                        <span>Manage Tables</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="#" id="sidebar-settings">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </a>
+            <a href="../main.html" id="sidebar-logout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Exit Admin</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <div class="top-bar glass-effect">
+            <div class="page-title">
+                <h1>Manage Tables</h1>
+            </div>
+            <div class="top-actions">
+                <a href="#" class="search-toggle">
+                    <i class="fas fa-search"></i>
+                </a>
+                <a href="#" class="user-menu-toggle">
+                    <i class="fas fa-user-shield"></i>
+                </a>
+            </div>
+
+            <!-- User Dropdown -->
+            <div class="user-dropdown glass-effect">
+                <div class="dropdown-header">
+                    <i class="fas fa-user-shield"></i>
+                    <span>Admin</span>
+                </div>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item"><i class="fas fa-cog"></i> Settings</a>
+                <a href="../main.html" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Exit Admin Panel</a>
+            </div>
+        </div>
+
+        <!-- Manage Tables Section -->
+        <section class="admin-section">
+            <div class="admin-container glass-effect">
+                <h2>Library Table Management</h2>
+                <p class="subtitle">Manage reading tables and assign them to library members</p>
+
+                <div class="tables-header">
+                    <div class="tables-stats">
+                        <div class="stats-card glass-effect">
+                            <div class="stats-icon">
+                                <span class="material-symbols-outlined">table_restaurant</span>
+                            </div>
+                            <div class="stats-info">
+                                <h3>Total Tables</h3>
+                                <p id="totalTables">0</p>
+                            </div>
+                        </div>
+                        <div class="stats-card glass-effect">
+                            <div class="stats-icon">
+                                <i class="fas fa-user-check"></i>
+                            </div>
+                            <div class="stats-info">
+                                <h3>Occupied</h3>
+                                <p id="occupiedTables">0</p>
+                            </div>
+                        </div>
+                        <div class="stats-card glass-effect">
+                            <div class="stats-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="stats-info">
+                                <h3>Available</h3>
+                                <p id="availableTables">0</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="addTableBtn" class="button dark">
+                        <span class="material-symbols-outlined">add</span> Add New Table
+                    </button>
+                </div>
+
+                <div id="tablesGrid" class="tables-grid">
+                    <!-- Tables will be dynamically added here -->
+                    <div class="empty-state">
+                        <span class="material-symbols-outlined">table_restaurant</span>
+                        <p>No tables available</p>
+                        <p>Click "Add New Table" to create your first table</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Add Table Modal -->
+        <div id="addTableModal" class="modal">
+            <div class="modal-content glass-effect">
+                <div class="modal-header">
+                    <h3><span class="material-symbols-outlined">table_restaurant</span> Add New Table</h3>
+                    <span class="close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="tableId">Table ID</label>
+                        <input type="text" id="tableId" placeholder="Enter table ID (e.g. T001)">
+                    </div>
+                    <div class="form-group">
+                        <label for="tableCapacity">Capacity</label>
+                        <input type="number" id="tableCapacity" placeholder="Enter table capacity" min="1" max="10" value="4">
+                    </div>
+                    <div class="form-group">
+                        <label for="tableLocation">Location</label>
+                        <input type="text" id="tableLocation" placeholder="Enter table location (e.g. North Wing)">
+                    </div>
+                    <div class="form-group">
+                        <label for="tableType">Table Type</label>
+                        <select id="tableType">
+                            <option value="Study">Study Table</option>
+                            <option value="Reading">Reading Table</option>
+                            <option value="Group">Group Table</option>
+                            <option value="Computer">Computer Table</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="saveTableBtn" class="button dark">Save Table</button>
+                    <button class="button light close-modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Table Details Modal -->
+        <div id="tableDetailsModal" class="modal">
+            <div class="modal-content glass-effect table-details-modal">
+                <div class="modal-header">
+                    <h3><span class="material-symbols-outlined">table_restaurant</span> <span id="modalTableId">Table ID</span></h3>
+                    <span class="close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div class="table-info-container">
+                        <div class="table-info">
+                            <h4>Table Information</h4>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <label>Capacity</label>
+                                    <p id="modalTableCapacity">4</p>
+                                </div>
+                                <div class="info-item">
+                                    <label>Location</label>
+                                    <p id="modalTableLocation">North Wing</p>
+                                </div>
+                                <div class="info-item">
+                                    <label>Type</label>
+                                    <p id="modalTableType">Study Table</p>
+                                </div>
+                                <div class="info-item">
+                                    <label>Status</label>
+                                    <p id="modalTableStatus"><span class="status-badge status-available">Available</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="assignUserSection">
+                        <h4>Assign User</h4>
+                        <div class="search-assign-container">
+                            <div class="form-group search-user-form">
+                                <input type="text" id="userMembershipId" placeholder="Enter membership ID (e.g. LIB-597750)">
+                                <button id="searchUserBtn" class="button dark">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="userAssignDetails" class="user-assign-details hidden">
+                            <div class="user-preview">
+                                <div class="user-icon">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="user-info-preview">
+                                    <h5 id="previewUserName">User Name</h5>
+                                    <p id="previewMembershipId">LIB-123456</p>
+                                </div>
+                            </div>
+                            <button id="assignUserBtn" class="button dark">Assign to Table</button>
+                        </div>
+                    </div>
+
+                    <div id="assignedUserSection" class="hidden">
+                        <div class="section-header">
+                            <h4>Assigned User</h4>
+                            <button id="removeUserBtn" class="button light">
+                                <i class="fas fa-user-minus"></i> Remove
+                            </button>
+                        </div>
+
+                        <div class="assigned-user-details">
+                            <div class="user-preview">
+                                <div class="user-icon">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="user-info-preview">
+                                    <h5 id="assignedUserName">User Name</h5>
+                                    <p id="assignedMembershipId">LIB-123456</p>
+                                    <p id="assignedUserEmail">user@example.com</p>
+                                </div>
+                            </div>
+
+                            <div class="current-book-section hidden" id="currentBookSection">
+                                <h5>Currently Reading</h5>
+                                <div class="book-preview" id="bookPreviewContainer">
+                                    <!-- Book details will be added completely dynamically -->
+                                </div>
+                            </div>
+
+                            <button id="removeBookBtn" class="button danger hidden">
+                                <span class="material-symbols-outlined">delete</span>
+                                Remove Book Assignment
+                            </button>
+
+                            <div class="no-book-section hidden" id="noBookSection">
+                                <div class="empty-book-state">
+                                    <i class="fas fa-book"></i>
+                                    <p id="noBookMessage">No Books Scanned Yet</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="button light close-modal">Close</button>
+                    <button id="deleteTableBtn" class="button danger">Delete Table</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Confirmation Modal -->
+        <div id="confirmationModal" class="modal">
+            <div class="modal-content glass-effect confirmation-modal">
+                <div class="modal-header">
+                    <h3><i class="fas fa-exclamation-triangle"></i> Confirmation</h3>
+                    <span class="close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <p id="confirmationMessage">Are you sure you want to proceed with this action?</p>
+                </div>
+                <div class="modal-footer">
+                    <button id="confirmActionBtn" class="button danger">Confirm</button>
+                    <button class="button light close-modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Modal -->
+        <div id="successModal" class="modal">
+            <div class="modal-content glass-effect">
+                <div class="modal-header">
+                    <h3><i class="fas fa-check-circle"></i> Success</h3>
+                    <span class="close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <p id="successMessage">Operation completed successfully.</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="button dark close-modal">OK</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="glass-effect">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>PROJECT LIBRAIOT</h3>
+                    <p>Admin Panel</p>
+                </div>
+                <div class="footer-section">
+                    <p><i class="fas fa-phone"></i> 921-142-0420</p>
+                    <p><i class="fas fa-envelope"></i> admin@libraiot.com</p>
+                    <p><a href="t&c.html" style="color: inherit; text-decoration: none;"><i class="fas fa-file-contract"></i> Terms & Conditions</a></p>
+                </div>
+                <div class="footer-section">
+                    <p><i class="fas fa-map-marker-alt"></i> 420, Nala Sopara</p>
+                    <p>7th Floor, Mumbai, IN</p>
+                    <p>401201</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Project LIBRAIOT. All rights reserved.</p>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        // Sidebar toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.querySelector('.sidebar');
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const mainContent = document.querySelector('.main-content');
+
+            sidebarToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('collapsed');
+                mainContent.classList.toggle('expanded');
+            });
+
+            // User dropdown functionality
+            const userMenuToggle = document.querySelector('.user-menu-toggle');
+            const userDropdown = document.querySelector('.user-dropdown');
+
+            userMenuToggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                userDropdown.classList.toggle('active');
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.user-menu-toggle') && !e.target.closest('.user-dropdown')) {
+                    userDropdown.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

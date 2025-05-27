@@ -1,0 +1,53 @@
+/* Fix for inconsistent heights and alignment */
+.search-input input,
+.filter-select,
+.search-button,
+.add-user-button {
+    height: 45px !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    align-items: center !important;
+    border-radius: 5px !important;
+}
+
+/* Search input specific adjustments */
+.search-input input {
+    padding: 0 15px !important;
+    flex: 1;
+}
+
+/* Filter select specific adjustments */
+.filter-select {
+    padding: 0 12px !important;
+    min-width: 150px !important;
+}
+
+/* Search button specific adjustments */
+.search-button {
+    width: 45px !important;
+    padding: 0 !important;
+    justify-content: center !important;
+}
+
+/* Add user button specific adjustments */
+.add-user-button {
+    padding: 0 15px !important;
+    justify-content: center !important;
+    gap: 8px !important;
+}
+
+/* Container alignment fix */
+.controls-container {
+    display: flex !important;
+    align-items: center !important;
+    gap: 15px !important;
+    flex-wrap: wrap !important;
+}
+
+/* Search container alignment */
+.search-container {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    flex: 1 !important;
+}

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Books - Admin Panel - LIBRAIOT</title>
+    <link rel="stylesheet" href="add-books-style.css">
+    <link rel="stylesheet" href="sidebar-style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Add type="module" to use import statements -->
+    <script src="add-books.js" type="module" defer></script>
+    <!-- PapaParse for CSV parsing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    <script src="firebase-collection-setup.js" type="module" defer></script>
+    <!-- SheetJS for Excel parsing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+    <!-- Left Sidebar Navigation -->
+    <aside class="sidebar glass-effect">
+        <div class="sidebar-header">
+            <div class="logo">
+                <span class="logo-text">LIBRAIOT</span>
+                <i class="fas fa-book-reader logo-icon"></i>
+            </div>
+            <div class="sidebar-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+        <div class="sidebar-user">
+            <div class="user-avatar">
+                <i class="fas fa-user-shield"></i>
+            </div>
+            <div class="user-info">
+                <p class="user-role">Admin Panel</p>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <ul>
+                <li>
+                    <a href="access.html">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="add-books.html">
+                        <i class="fas fa-book-medical"></i>
+                        <span>Add Books</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="issue.html">
+                        <i class="fas fa-book-reader"></i>
+                        <span>Issue Books</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="user-database.html">
+                        <i class="fas fa-users"></i>
+                        <span>User Database</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="books-database.html">
+                        <i class="fas fa-table"></i>
+                        <span>Manage Books</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="manage-tables.html">
+                        <span class="material-symbols-outlined">table_restaurant</span>
+                        <span>Manage Tables</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="#" id="sidebar-settings">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </a>
+            <a href="../main.html" id="sidebar-logout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Exit Admin</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <div class="top-bar glass-effect">
+            <div class="page-title">
+                <h1>Add Books</h1>
+            </div>
+            <div class="top-actions">
+                <a href="#" class="search-toggle">
+                    <i class="fas fa-search"></i>
+                </a>
+                <a href="#" class="user-menu-toggle">
+                    <i class="fas fa-user-shield"></i>
+                </a>
+            </div>
+
+            <!-- User Dropdown -->
+            <div class="user-dropdown glass-effect">
+                <div class="dropdown-header">
+                    <i class="fas fa-user-shield"></i>
+                    <span>Admin</span>
+                </div>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item"><i class="fas fa-cog"></i> Settings</a>
+                <a href="../main.html" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Exit Admin Panel</a>
+            </div>
+        </div>
+
+        <!-- Add Books Section -->
+        <section class="admin-section">
+            <div class="admin-container glass-effect">
+                <h2>Add Books to Database</h2>
+                <p class="admin-subtitle">Upload books via CSV/Excel or add individually</p>
+
+                <div class="tabs">
+                    <button class="tab-button active" data-tab="upload">Bulk Upload</button>
+                    <button class="tab-button" data-tab="manual">Add Single Book</button>
+                </div>
+
+                <div class="tab-content">
+                    <!-- Bulk Upload Tab -->
+                    <div id="upload" class="tab-pane active">
+                        <div class="upload-container">
+                            <div class="file-upload-area">
+                                <i class="fas fa-file-upload"></i>
+                                <h3>Upload CSV or Excel File</h3>
+                                <p>Drag and drop your file here or click to browse</p>
+                                <input type="file" id="fileUpload" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+                            </div>
+
+                            <div class="upload-info">
+                                <h4>File Requirements</h4>
+                                <ul>
+                                    <li>CSV or Excel format (.csv, .xlsx, .xls)</li>
+                                    <li>Required columns: ISBN, title, author, publisher</li>
+                                    <li>Optional: year, genre, description, language, pageCount</li>
+                                    <li>First row should be column headers</li>
+                                </ul>
+                                <a href="#" id="downloadTemplate">Download Template</a>
+                            </div>
+                        </div>
+
+                        <div class="preview-container hidden">
+                            <h3>Preview Data</h3>
+                            <p>Showing <span id="previewCount">0</span> of <span id="totalCount">0</span> books</p>
+
+                            <div class="preview-table-container">
+                                <table id="previewTable" class="preview-table">
+                                    <!-- Table will be populated by JavaScript -->
+                                </table>
+                            </div>
+
+                            <div class="button-group">
+                                <button id="cancelUpload" class="button cancel-button">Cancel</button>
+                                <button id="uploadToDatabase" class="button">Upload to Database</button>
+                            </div>
+                        </div>
+
+                        <div id="progressContainer" class="progress-container hidden">
+                            <h3>Uploading Books</h3>
+                            <div class="progress-bar-container">
+                                <div id="progressBar" class="progress-bar"></div>
+                            </div>
+                            <p id="progressStatus">Uploading book 0 of 0...</p>
+                            <p id="fetchCoverStatus"></p>
+                        </div>
+                    </div>
+
+                    <!-- Manual Entry Tab -->
+                    <div id="manual" class="tab-pane">
+                        <form id="addBookForm" class="add-book-form">
+                            <div class="form-columns">
+                                <div class="form-column">
+                                    <div class="form-group">
+                                        <label for="isbn">ISBN *</label>
+                                        <div class="input-group">
+                                            <input type="text" id="isbn" name="isbn" required>
+                                            <button type="button" id="fetchBookInfo" class="button fetch-button">
+                                                <i class="fas fa-search"></i> Fetch Info
+                                            </button>
+                                        </div>
+                                        <p class="field-info">Enter 10 or 13-digit ISBN</p>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="title">Book Title *</label>
+                                        <input type="text" id="title" name="title" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="author">Author(s) *</label>
+                                        <input type="text" id="author" name="author" required>
+                                        <p class="field-info">Separate multiple authors with commas</p>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="publisher">Publisher *</label>
+                                        <input type="text" id="publisher" name="publisher" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="publicationYear">Publication Year</label>
+                                        <input type="number" id="publicationYear" name="publicationYear">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="genres">Genres</label>
+                                        <input type="text" id="genres" name="genres">
+                                        <p class="field-info">Separate multiple genres with commas</p>
+                                    </div>
+                                </div>
+
+                                <div class="form-column">
+                                    <div class="form-group">
+                                        <label for="language">Language</label>
+                                        <input type="text" id="language" name="language" value="English">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="pageCount">Page Count</label>
+                                        <input type="number" id="pageCount" name="pageCount">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="description">Description</label>
+                                        <textarea id="description" name="description" rows="5"></textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Book Cover</label>
+                                        <div class="cover-preview-container">
+                                            <div id="coverPreview" class="cover-preview">
+                                                <i class="fas fa-book"></i>
+                                                <p>Cover image will appear here</p>
+                                            </div>
+                                            <div class="cover-actions">
+                                                <button type="button" id="fetchCover" class="button fetch-button">
+                                                    <i class="fas fa-search"></i> Fetch Cover
+                                                </button>
+                                                <p class="field-info">Uses ISBN to fetch cover image</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="reset" class="button cancel-button">Clear Form</button>
+                                <button type="submit" class="button">Add Book</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Status Message Area -->
+                <div id="statusMessage" class="status-message"></div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="glass-effect">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>PROJECT LIBRAIOT</h3>
+                    <p>Admin Panel</p>
+                </div>
+                <div class="footer-section">
+                    <p><i class="fas fa-phone"></i> 921-142-0420</p>
+                    <p><i class="fas fa-envelope"></i> admin@libraiot.com</p>
+                    <p><a href="t&c.html" style="color: inherit; text-decoration: none;"><i class="fas fa-file-contract"></i> Terms & Conditions</a></p>
+                </div>
+                <div class="footer-section">
+                    <p><i class="fas fa-map-marker-alt"></i> 420, Nala Sopara</p>
+                    <p>7th Floor, Mumbai, IN</p>
+                    <p>401201</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Project LIBRAIOT. All rights reserved.</p>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        // Sidebar toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.querySelector('.sidebar');
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const mainContent = document.querySelector('.main-content');
+
+            sidebarToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('collapsed');
+                mainContent.classList.toggle('expanded');
+            });
+
+            // User dropdown functionality
+            const userMenuToggle = document.querySelector('.user-menu-toggle');
+            const userDropdown = document.querySelector('.user-dropdown');
+
+            userMenuToggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                userDropdown.classList.toggle('active');
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.user-menu-toggle') && !e.target.closest('.user-dropdown')) {
+                    userDropdown.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

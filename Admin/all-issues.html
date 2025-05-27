@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Issues - Admin Panel - LIBRAIOT</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="issue-style.css">
+    <link rel="stylesheet" href="sidebar-style.css">
+    <link rel="stylesheet" href="all-issues-style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="all-issues.js" type="module" defer></script>
+</head>
+<body>
+    <!-- Left Sidebar Navigation -->
+    <aside class="sidebar glass-effect">
+        <div class="sidebar-header">
+            <div class="logo">
+                <span class="logo-text">LIBRAIOT</span>
+                <i class="fas fa-book-reader logo-icon"></i>
+            </div>
+            <div class="sidebar-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+        <div class="sidebar-user">
+            <div class="user-avatar">
+                <i class="fas fa-user-shield"></i>
+            </div>
+            <div class="user-info">
+                <p class="user-role">Admin Panel</p>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <ul>
+                <li>
+                    <a href="access.html">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="add-books.html">
+                        <i class="fas fa-book-medical"></i>
+                        <span>Add Books</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="issue.html">
+                        <i class="fas fa-book-reader"></i>
+                        <span>Issue Books</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="user-database.html">
+                        <i class="fas fa-users"></i>
+                        <span>User Database</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="books-database.html">
+                        <i class="fas fa-table"></i>
+                        <span>Manage Books</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="manage-tables.html">
+                        <span class="material-symbols-outlined">table_restaurant</span>
+                        <span>Manage Tables</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="#" id="sidebar-settings">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </a>
+            <a href="../main.html" id="sidebar-logout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Exit Admin</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <div class="top-bar glass-effect">
+            <div class="page-title">
+                <h1>All Issues</h1>
+            </div>
+            <div class="top-actions">
+                <a href="#" class="search-toggle">
+                    <i class="fas fa-search"></i>
+                </a>
+                <a href="#" class="user-menu-toggle">
+                    <i class="fas fa-user-shield"></i>
+                </a>
+            </div>
+
+            <!-- User Dropdown -->
+            <div class="user-dropdown glass-effect">
+                <div class="dropdown-header">
+                    <i class="fas fa-user-shield"></i>
+                    <span>Admin</span>
+                </div>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item"><i class="fas fa-cog"></i> Settings</a>
+                <a href="../main.html" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Exit Admin Panel</a>
+            </div>
+        </div>
+
+        <!-- Search and Filter Section -->
+        <section class="admin-section">
+            <div class="admin-container glass-effect">
+                <div class="filter-container">
+                    <div class="search-box">
+                        <input type="text" id="searchInput" placeholder="Search by title, user ID, or ISBN...">
+                        <button id="searchBtn" class="button dark">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <div class="filter-options">
+                        <div class="filter-group">
+                            <label for="statusFilter">Status</label>
+                            <select id="statusFilter">
+                                <option value="all">All</option>
+                                <option value="issued">Issued</option>
+                                <option value="returned">Returned</option>
+                                <option value="overdue">Overdue</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="dateFilter">Date Range</label>
+                            <select id="dateFilter">
+                                <option value="all">All Time</option>
+                                <option value="today">Today</option>
+                                <option value="week">This Week</option>
+                                <option value="month">This Month</option>
+                                <option value="custom">Custom Range</option>
+                            </select>
+                        </div>
+                        <div id="customDateRange" class="custom-date-range hidden">
+                            <div class="date-input">
+                                <label for="startDate">From</label>
+                                <input type="date" id="startDate">
+                            </div>
+                            <div class="date-input">
+                                <label for="endDate">To</label>
+                                <input type="date" id="endDate">
+                            </div>
+                            <button id="applyDateRange" class="button dark">Apply</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- All Issues Table Section -->
+        <section class="admin-section">
+            <div class="admin-container glass-effect">
+                <div class="table-header">
+                    <h2>Book Issues</h2>
+                    <div class="actions">
+                        <button id="refreshTable" class="button light">
+                            <i class="fas fa-sync-alt"></i> Refresh
+                        </button>
+                        <button id="exportData" class="button dark">
+                            <i class="fas fa-download"></i> Export
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table id="issuesTable" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Book Cover</th>
+                                <th>Book Details</th>
+                                <th>User Details</th>
+                                <th>Issue Date</th>
+                                <th>Return Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="issuesTableBody">
+                            <!-- Table content will be loaded dynamically -->
+                            <tr class="loading-row">
+                                <td colspan="7">
+                                    <div class="loading-spinner">
+                                        <i class="fas fa-spinner fa-pulse"></i>
+                                        <span>Loading issues...</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination-container">
+                    <div class="pagination-info">
+                        Showing <span id="startRange">1</span>-<span id="endRange">10</span> of <span id="totalItems">0</span> items
+                    </div>
+                    <div class="pagination-controls">
+                        <button id="prevPage" class="page-btn" disabled>
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <div id="pageNumbers" class="page-numbers">
+                            <!-- Page numbers will be added dynamically -->
+                        </div>
+                        <button id="nextPage" class="page-btn">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Return Book Modal -->
+        <div id="returnModal" class="modal">
+            <div class="modal-content glass-effect">
+                <div class="modal-header">
+                    <h3><i class="fas fa-book-reader"></i> Return Book</h3>
+                    <span class="close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-book-info">
+                        <img id="modalBookCover" src="/api/placeholder/120/180" alt="Book cover">
+                        <div>
+                            <h4 id="modalBookTitle">Book Title</h4>
+                            <p id="modalBookAuthor">Author Name</p>
+                            <p id="modalIsbn">ISBN: 0000000000000</p>
+                        </div>
+                    </div>
+                    <div class="modal-user-info">
+                        <p><strong>Issued To:</strong> <span id="modalUserName">User Name</span></p>
+                        <p><strong>User ID:</strong> <span id="modalMembershipId">LIB-000000</span></p>
+                        <p><strong>Issue Date:</strong> <span id="modalIssueDate">2025-00-00</span></p>
+                        <p><strong>Due Date:</strong> <span id="modalReturnDate">2025-00-00</span></p>
+                    </div>
+                    <div class="return-details">
+                        <div class="details-group">
+                            <label for="actualReturnDate">Return Date</label>
+                            <input type="date" id="actualReturnDate">
+                        </div>
+                        <div class="details-group">
+                            <label for="returnCondition">Book Condition</label>
+                            <select id="returnCondition">
+                                <option value="excellent">Excellent</option>
+                                <option value="good" selected>Good</option>
+                                <option value="fair">Fair</option>
+                                <option value="poor">Poor</option>
+                                <option value="damaged">Damaged</option>
+                            </select>
+                        </div>
+                        <div class="details-group">
+                            <label for="returnNotes">Notes</label>
+                            <textarea id="returnNotes" placeholder="Any notes about the returned book..."></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="button light" id="cancelReturn">Cancel</button>
+                    <button class="button dark" id="confirmReturn">Confirm Return</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Modal -->
+        <div id="successModal" class="modal">
+            <div class="modal-content glass-effect">
+                <div class="modal-header">
+                    <h3><i class="fas fa-check-circle"></i> Success</h3>
+                    <span class="close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <p id="successMessage">Book has been successfully marked as returned.</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="button dark" id="successOkButton">OK</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Error Modal -->
+        <div id="errorModal" class="modal">
+            <div class="modal-content glass-effect">
+                <div class="modal-header">
+                    <h3><i class="fas fa-exclamation-circle"></i> Error</h3>
+                    <span class="close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <p id="errorMessage">There was an error processing your request.</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="button dark" id="errorOkButton">OK</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="glass-effect">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>PROJECT LIBRAIOT</h3>
+                    <p>Admin Panel</p>
+                </div>
+                <div class="footer-section">
+                    <p><i class="fas fa-phone"></i> 921-142-0420</p>
+                    <p><i class="fas fa-envelope"></i> admin@libraiot.com</p>
+                    <p><a href="t&c.html" style="color: inherit; text-decoration: none;"><i class="fas fa-file-contract"></i> Terms & Conditions</a></p>
+                </div>
+                <div class="footer-section">
+                    <p><i class="fas fa-map-marker-alt"></i> 420, Nala Sopara</p>
+                    <p>7th Floor, Mumbai, IN</p>
+                    <p>401201</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Project LIBRAIOT. All rights reserved.</p>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        // Sidebar toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.querySelector('.sidebar');
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const mainContent = document.querySelector('.main-content');
+
+            sidebarToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('collapsed');
+                mainContent.classList.toggle('expanded');
+            });
+
+            // User dropdown functionality
+            const userMenuToggle = document.querySelector('.user-menu-toggle');
+            const userDropdown = document.querySelector('.user-dropdown');
+
+            userMenuToggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                userDropdown.classList.toggle('active');
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.user-menu-toggle') && !e.target.closest('.user-dropdown')) {
+                    userDropdown.classList.remove('active');
+                }
+            });
+
+            // Custom date range toggle
+            const dateFilter = document.getElementById('dateFilter');
+            const customDateRange = document.getElementById('customDateRange');
+
+            dateFilter.addEventListener('change', function() {
+                if (this.value === 'custom') {
+                    customDateRange.classList.remove('hidden');
+                } else {
+                    customDateRange.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

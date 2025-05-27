@@ -1,0 +1,538 @@
+/* All Issues Page Specific Styles */
+
+/* Search and Filter Container */
+.filter-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 10px 0;
+}
+
+.search-box {
+    display: flex;
+    width: 100%;
+    gap: 10px;
+}
+
+.search-box input {
+    flex: 1;
+    padding: 12px 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    color: #fff;
+    font-size: 1rem;
+}
+
+.search-box input:focus {
+    outline: none;
+    border-color: rgba(0, 255, 255, 0.5);
+    box-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
+}
+
+.filter-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: flex-end;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    min-width: 150px;
+    flex: 1;
+}
+
+.filter-group label {
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.filter-group select {
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.filter-group select:focus {
+    outline: none;
+    border-color: rgba(0, 255, 255, 0.5);
+    box-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
+}
+
+/* Custom Date Range */
+.custom-date-range {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: flex-end;
+    margin-top: 10px;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.custom-date-range.hidden {
+    display: none;
+}
+
+.date-input {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.date-input label {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.date-input input {
+    padding: 8px 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    color: #fff;
+    font-size: 0.9rem;
+}
+
+/* Table Header */
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.table-header h2 {
+    font-size: 1.5rem;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+    font-weight: 300;
+    margin: 0;
+}
+
+.table-header .actions {
+    display: flex;
+    gap: 10px;
+}
+
+.table-header .button {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Responsive Table */
+.table-responsive {
+    overflow-x: auto;
+    margin-bottom: 20px;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.data-table thead th {
+    background: rgba(0, 0, 0, 0.3);
+    color: rgba(0, 255, 255, 0.8);
+    padding: 15px;
+    text-align: left;
+    font-weight: 500;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.data-table tbody td {
+    padding: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    vertical-align: middle;
+}
+
+.data-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.data-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Book and User Details */
+.book-cover {
+    width: 60px;
+    height: 90px;
+    border-radius: 4px;
+    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.book-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.book-title {
+    font-weight: 500;
+    font-size: 1.1rem;
+    color: #fff;
+    margin: 0;
+}
+
+.book-author {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+}
+
+.book-isbn {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.user-name {
+    font-weight: 500;
+    font-size: 1rem;
+    color: #fff;
+    margin: 0;
+}
+
+.user-id {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+}
+
+.user-email {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0;
+}
+
+/* Status Badge */
+.status-badge {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-align: center;
+    min-width: 100px;
+}
+
+.status-badge.issued {
+    background-color: rgba(255, 193, 7, 0.2);
+    color: #ffc107;
+}
+
+.status-badge.returned {
+    background-color: rgba(40, 167, 69, 0.2);
+    color: #28a745;
+}
+
+.status-badge.overdue {
+    background-color: rgba(220, 53, 69, 0.2);
+    color: #dc3545;
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.action-btn {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 5px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.action-btn:hover {
+    color: #0ff;
+    background: rgba(0, 255, 255, 0.1);
+}
+
+.action-btn.return-btn {
+    color: #28a745;
+}
+
+.action-btn.return-btn:hover {
+    color: #2fd151;
+    background: rgba(40, 167, 69, 0.1);
+}
+
+.action-btn.view-btn {
+    color: #0ff;
+}
+
+.action-btn.view-btn:hover {
+    color: #5fffff;
+    background: rgba(0, 255, 255, 0.1);
+}
+
+/* Loading Spinner */
+.loading-row td {
+    text-align: center;
+    padding: 40px 0;
+}
+
+.loading-spinner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.loading-spinner i {
+    font-size: 2rem;
+    color: #0ff;
+}
+
+/* Pagination */
+.pagination-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.pagination-info {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+}
+
+.pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.page-btn {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.7);
+    width: 36px;
+    height: 36px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.page-btn:hover:not(:disabled) {
+    background: rgba(0, 255, 255, 0.1);
+    color: #0ff;
+    border-color: rgba(0, 255, 255, 0.3);
+}
+
+.page-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.page-numbers {
+    display: flex;
+    gap: 5px;
+}
+
+.page-number {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.7);
+    width: 36px;
+    height: 36px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.page-number:hover {
+    background: rgba(0, 255, 255, 0.1);
+    color: #fff;
+}
+
+.page-number.active {
+    background: rgba(0, 255, 255, 0.2);
+    color: #0ff;
+    border-color: rgba(0, 255, 255, 0.3);
+}
+
+/* Return Book Modal */
+.modal-book-info {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-book-info img {
+    width: 100px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 5px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.modal-book-info h4 {
+    font-size: 1.3rem;
+    margin: 0 0 5px 0;
+    color: #fff;
+}
+
+.modal-book-info p {
+    margin: 5px 0;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.modal-user-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-user-info p {
+    margin: 5px 0;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.return-details {
+    margin-top: 20px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1200px) {
+    .modal-user-info {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 992px) {
+    .filter-options {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-group {
+        width: 100%;
+    }
+
+    .custom-date-range {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .pagination-container {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .table-header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
+
+    .data-table thead {
+        display: none;
+    }
+
+    .data-table tbody tr {
+        display: block;
+        margin-bottom: 15px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 5px;
+    }
+
+    .data-table tbody td {
+        display: block;
+        text-align: right;
+        padding: 10px 15px;
+        position: relative;
+        padding-left: 50%;
+    }
+
+    .data-table tbody td:before {
+        content: attr(data-label);
+        position: absolute;
+        left: 15px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align: left;
+        font-weight: 500;
+        color: rgba(0, 255, 255, 0.8);
+    }
+
+    .book-cover {
+        margin-left: auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .table-header .actions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .table-header .button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .modal-book-info {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .modal-footer {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .modal-footer button {
+        width: 100%;
+    }
+}
+

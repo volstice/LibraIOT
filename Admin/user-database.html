@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Database - Admin Panel - LIBRAIOT</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="sidebar-style.css">
+    <link rel="stylesheet" href="user-database-style.css">
+    <link rel="stylesheet" href="alignment.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="user-database.js" type="module" defer></script>
+    <!--<script src="route-protector.js" type="module" defer></script>
+    <script src="auth-handler.js" type="module" defer></script>--!>
+    <style>
+        /* Reset all relevant elements for consistency */
+        .search-input input,
+        .filter-select,
+        .search-button,
+        .add-user-button,
+        button[type="submit"],
+        input[type="search"],
+        select.form-control,
+        .btn {
+            height: 45px !important;
+            line-height: 45px !important;
+            box-sizing: border-box !important;
+            border-radius: 5px !important;
+            vertical-align: middle !important;
+        }
+
+        /* Fix for control containers */
+        .controls-container,
+        .search-container,
+        .form-group,
+        .input-group {
+            display: flex !important;
+            align-items: center !important;
+
+        }
+
+        /* Override any potential padding discrepancies */
+        input[type="search"],
+        input[type="text"],
+        select.form-control {
+            padding: 0 15px !important;
+        }
+
+        /* Make sure buttons have consistent styling */
+        button,
+        .btn,
+        .search-button,
+        .add-user-button {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+    </style>
+</head>
+<body>
+<!-- Left Sidebar Navigation -->
+<aside class="sidebar glass-effect">
+    <div class="sidebar-header">
+        <div class="logo">
+            <span class="logo-text">LIBRAIOT</span>
+            <i class="fas fa-book-reader logo-icon"></i>
+        </div>
+        <div class="sidebar-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
+    </div>
+    <div class="sidebar-user">
+        <div class="user-avatar">
+            <i class="fas fa-user-shield"></i>
+        </div>
+        <div class="user-info">
+            <p class="user-role">Admin Panel</p>
+        </div>
+    </div>
+    <nav class="sidebar-nav">
+        <ul>
+            <li>
+                <a href="access.html">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="add-books.html">
+                    <i class="fas fa-book-medical"></i>
+                    <span>Add Books</span>
+                </a>
+            </li>
+            <li>
+                <a href="issue.html">
+                    <i class="fas fa-book-reader"></i>
+                    <span>Issue Books</span>
+                </a>
+            </li>
+            <li class="active">
+                <a href="user-database.html">
+                    <i class="fas fa-users"></i>
+                    <span>User Database</span>
+                </a>
+            </li>
+            <li>
+                <a href="books-database.html">
+                    <i class="fas fa-table"></i>
+                    <span>Manage Books</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="manage-tables.html">
+                        <span class="material-symbols-outlined">table_restaurant</span>
+                        <span>Manage Tables</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <div class="sidebar-footer">
+        <a href="#" id="sidebar-settings">
+            <i class="fas fa-cog"></i>
+            <span>Settings</span>
+        </a>
+        <a href="../main.html" id="sidebar-logout">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Exit Admin</span>
+        </a>
+    </div>
+</aside>
+
+<!-- Main Content Area -->
+<main class="main-content">
+    <div class="top-bar glass-effect">
+        <div class="page-title">
+            <h1>User Database</h1>
+        </div>
+        <div class="top-actions">
+            <a href="#" class="search-toggle">
+                <i class="fas fa-search"></i>
+            </a>
+            <a href="#" class="user-menu-toggle">
+                <i class="fas fa-user-shield"></i>
+            </a>
+        </div>
+
+        <!-- User Dropdown -->
+        <div class="user-dropdown glass-effect">
+            <div class="dropdown-header">
+                <i class="fas fa-user-shield"></i>
+                <span>Admin</span>
+            </div>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item"><i class="fas fa-cog"></i> Settings</a>
+            <a href="../main.html" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Exit Admin Panel</a>
+        </div>
+    </div>
+
+    <!-- User Database Section -->
+    <section class="admin-section">
+        <div class="admin-container glass-effect">
+            <h2>User Database Management</h2>
+            <p class="subtitle">Manage library members and their details</p>
+
+            <div class="controls-container">
+                <div class="search-container">
+                    <div class="search-input">
+                        <input type="text" id="searchUser" placeholder="Search by name, email, or membership ID...">
+                        <button id="searchButton" class="button dark">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="filter-container">
+                    <select id="filterMembership" class="filter-select">
+                        <option value="all">All Memberships</option>
+                        <option value="standard">Standard</option>
+                        <option value="premium">Premium</option>
+                        <option value="student">Student</option>
+                        <option value="expired">Expired</option>
+                    </select>
+                    <button id="addUserButton" class="button dark">
+                        <i class="fas fa-user-plus"></i> Add New User
+                    </button>
+                </div>
+            </div>
+
+            <div class="users-table-container">
+                <table id="usersTable" class="users-table">
+                    <thead>
+                    <tr>
+                        <th>
+                            <input type="checkbox" id="selectAll">
+                        </th>
+                        <th>Membership ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Membership Type</th>
+                        <th>Expiry Date</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody id="usersTableBody">
+                    <!-- Table content will be dynamically populated -->
+                    <tr class="loading-row">
+                        <td colspan="8">
+                            <div class="loading-spinner">
+                                <i class="fas fa-spinner fa-spin"></i>
+                                <span>Loading users data...</span>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination-container">
+                <div class="pagination-info">
+                    <span id="paginationInfo">Showing 1-10 of 0 users</span>
+                </div>
+                <div class="pagination-controls">
+                    <button id="prevPage" class="pagination-button" disabled>
+                        <i class="fas fa-chevron-left"></i> Previous
+                    </button>
+                    <div id="paginationNumbers" class="pagination-numbers">
+                        <!-- Page numbers will be dynamically added -->
+                    </div>
+                    <button id="nextPage" class="pagination-button" disabled>
+                        Next <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                <div class="pagination-options">
+                    <label for="itemsPerPage">Items per page:</label>
+                    <select id="itemsPerPage" class="pagination-select">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- User Modal (for Add/Edit) -->
+    <div id="userModal" class="modal">
+        <div class="modal-content glass-effect">
+            <div class="modal-header">
+                <h3 id="modalTitle"><i class="fas fa-user-edit"></i> Edit User</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="userForm">
+                    <input type="hidden" id="userId">
+                    <div class="form-columns">
+                        <div class="form-column">
+                            <h4>Personal Information</h4>
+                            <div class="form-group">
+                                <label for="fullName">Full Name</label>
+                                <input type="text" id="fullName" placeholder="Enter full name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="displayName">Display Name</label>
+                                <input type="text" id="displayName" placeholder="Enter display name">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" placeholder="Enter email address" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone</label>
+                                <input type="text" id="phone" placeholder="Enter phone number">
+                            </div>
+                            <div class="form-group">
+                                <label for="gender">Gender</label>
+                                <select id="gender">
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                    <option value="prefer-not-to-say">Prefer not to say</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="dob">Date of Birth</label>
+                                <input type="date" id="dob">
+                            </div>
+                            <div class="form-group">
+                                <label for="address">Address</label>
+                                <textarea id="address" placeholder="Enter address"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-column">
+                            <h4>Library Membership</h4>
+                            <div class="form-group">
+                                <label for="membershipId">Membership ID</label>
+                                <input type="text" id="membershipId" placeholder="Auto-generated for new users"
+                                       readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="membershipType">Membership Type</label>
+                                <select id="membershipType">
+                                    <option value="standard">Standard</option>
+                                    <option value="premium">Premium</option>
+                                    <option value="student">Student</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="membershipSince">Member Since</label>
+                                <input type="date" id="membershipSince">
+                            </div>
+                            <div class="form-group">
+                                <label for="membershipExpiry">Expiry Date</label>
+                                <input type="date" id="membershipExpiry">
+                            </div>
+                            <div class="form-group">
+                                <label for="readingInterests">Reading Interests</label>
+                                <select id="readingInterests" multiple>
+                                    <option value="fiction">Fiction</option>
+                                    <option value="non-fiction">Non-Fiction</option>
+                                    <option value="fantasy">Fantasy</option>
+                                    <option value="sci-fi">Science Fiction</option>
+                                    <option value="mystery">Mystery</option>
+                                    <option value="biography">Biography</option>
+                                    <option value="history">History</option>
+                                    <option value="science">Science</option>
+                                    <option value="self-help">Self-Help</option>
+                                    <option value="romance">Romance</option>
+                                    <option value="thriller">Thriller</option>
+                                </select>
+                                <small>Hold Ctrl/Cmd to select multiple</small>
+                            </div>
+                            <h4>Notification Preferences</h4>
+                            <div class="form-group">
+                                <label for="language">Preferred Language</label>
+                                <select id="language">
+                                    <option value="english">English</option>
+                                    <option value="spanish">Spanish</option>
+                                    <option value="french">French</option>
+                                    <option value="hindi">Hindi</option>
+                                </select>
+                            </div>
+                            <div class="form-group checkbox-group">
+                                <label class="checkbox-container">
+                                    <input type="checkbox" id="emailUpdates">
+                                    <span class="checkbox-label">Email Updates</span>
+                                </label>
+                            </div>
+                            <div class="form-group checkbox-group">
+                                <label class="checkbox-container">
+                                    <input type="checkbox" id="newReleases">
+                                    <span class="checkbox-label">New Releases</span>
+                                </label>
+                            </div>
+                            <div class="form-group checkbox-group">
+                                <label class="checkbox-container">
+                                    <input type="checkbox" id="returnReminders">
+                                    <span class="checkbox-label">Return Reminders</span>
+                                </label>
+                            </div>
+                            <div class="form-group checkbox-group">
+                                <label class="checkbox-container">
+                                    <input type="checkbox" id="recommendations">
+                                    <span class="checkbox-label">Recommendations</span>
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label for="notificationsType">Notification Type</label>
+                                <select id="notificationsType">
+                                    <option value="all">All Notifications</option>
+                                    <option value="important">Important Only</option>
+                                    <option value="none">None</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="button light" id="cancelButton">Cancel</button>
+                <button class="button dark" id="saveUserButton">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content glass-effect">
+            <div class="modal-header">
+                <h3><i class="fas fa-exclamation-triangle"></i> Confirm Delete</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this user? This action cannot be undone.</p>
+                <div class="user-info-confirmation">
+                    <p><strong>Name:</strong> <span id="deleteUserName"></span></p>
+                    <p><strong>Membership ID:</strong> <span id="deleteUserMembership"></span></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="button light" id="cancelDeleteButton">Cancel</button>
+                <button class="button danger" id="confirmDeleteButton">Delete User</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- View User Details Modal -->
+    <div id="viewUserModal" class="modal">
+        <div class="modal-content glass-effect">
+            <div class="modal-header">
+                <h3><i class="fas fa-user"></i> User Details</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="user-summary">
+                    <div class="user-avatar-large">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-meta">
+                        <h3 id="viewFullName"></h3>
+                        <p id="viewMembershipId"></p>
+                        <div class="user-status" id="viewMembershipStatus"></div>
+                    </div>
+                </div>
+
+                <div class="tabs-container">
+                    <div class="tabs-header">
+                        <button class="tab-button active" data-tab="info">Basic Info</button>
+                        <button class="tab-button" data-tab="library">Library Info</button>
+                        <button class="tab-button" data-tab="books">Books</button>
+                        <button class="tab-button" data-tab="activity">Activity</button>
+                    </div>
+                    <div class="tabs-content">
+                        <div class="tab-panel active" id="tab-info">
+                            <div class="info-columns">
+                                <div class="info-column">
+                                    <h4>Contact Information</h4>
+                                    <div class="info-item">
+                                        <label>Email</label>
+                                        <p id="viewEmail"></p>
+                                    </div>
+                                    <div class="info-item">
+                                        <label>Phone</label>
+                                        <p id="viewPhone"></p>
+                                    </div>
+                                    <div class="info-item">
+                                        <label>Address</label>
+                                        <p id="viewAddress"></p>
+                                    </div>
+                                </div>
+                                <div class="info-column">
+                                    <h4>Personal Details</h4>
+                                    <div class="info-item">
+                                        <label>Display Name</label>
+                                        <p id="viewDisplayName"></p>
+                                    </div>
+                                    <div class="info-item">
+                                        <label>Gender</label>
+                                        <p id="viewGender"></p>
+                                    </div>
+                                    <div class="info-item">
+                                        <label>Date of Birth</label>
+                                        <p id="viewDob"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-panel" id="tab-library">
+                            <div class="info-columns">
+                                <div class="info-column">
+                                    <h4>Membership Details</h4>
+                                    <div class="info-item">
+                                        <label>Member Since</label>
+                                        <p id="viewMemberSince"></p>
+                                    </div>
+                                    <div class="info-item">
+                                        <label>Expiry Date</label>
+                                        <p id="viewExpiryDate"></p>
+                                    </div>
+                                    <div class="info-item">
+                                        <label>Membership Type</label>
+                                        <p id="viewMembershipType"></p>
+                                    </div>
+                                </div>
+                                <div class="info-column">
+                                    <h4>Preferences</h4>
+                                    <div class="info-item">
+                                        <label>Reading Interests</label>
+                                        <div id="viewReadingInterests" class="tags-container"></div>
+                                    </div>
+                                    <div class="info-item">
+                                        <label>Preferred Language</label>
+                                        <p id="viewLanguage"></p>
+                                    </div>
+                                    <div class="info-item">
+                                        <label>Notifications</label>
+                                        <p id="viewNotifications"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-panel" id="tab-books">
+                            <div class="books-container">
+                                <h4>Currently Borrowed</h4>
+                                <div id="borrowedBooks" class="books-list">
+                                    <p class="no-data-message">No books currently borrowed.</p>
+                                </div>
+
+                                <h4>Borrowing History</h4>
+                                <div id="historyBooks" class="books-list">
+                                    <p class="no-data-message">No borrowing history available.</p>
+                                </div>
+
+                                <h4>Favorite Books</h4>
+                                <div id="favoriteBooks" class="books-list">
+                                    <p class="no-data-message">No favorite books added.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-panel" id="tab-activity">
+                            <div class="activity-timeline">
+                                <h4>Recent Activity</h4>
+                                <div id="activityList" class="timeline">
+                                    <p class="no-data-message">No recent activity recorded.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="button light" id="closeViewButton">Close</button>
+                <button class="button dark" id="editFromViewButton">Edit User</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Toast Notification -->
+    <div id="toast" class="toast">
+        <div class="toast-content">
+            <i class="fas fa-check-circle toast-icon success"></i>
+            <div class="toast-message">
+                <span id="toastMessage">Operation completed successfully!</span>
+            </div>
+        </div>
+        <div class="toast-progress"></div>
+    </div>
+
+    <!-- RFID Modal -->
+    <div id="rfidModal" class="modal">
+        <div class="modal-content glass-effect">
+            <div class="modal-header">
+                <h3><i class="fas fa-qrcode"></i> Set RFID</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>Assign RFID tag for user: <strong id="rfidUserName"></strong></p>
+                <p><strong>Membership ID:</strong> <span id="rfidMembershipId"></span></p>
+
+                <div class="form-group">
+                    <label for="rfidInput">RFID Value</label>
+                    <input type="text" id="rfidInput" placeholder="Scan or enter RFID value" required>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="button light" id="cancelRfidButton">Cancel</button>
+                <button class="button dark" id="saveRfidButton">Save RFID</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="glass-effect">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>PROJECT LIBRAIOT</h3>
+                <p>Admin Panel</p>
+            </div>
+            <div class="footer-section">
+                <p><i class="fas fa-phone"></i> 921-142-0420</p>
+                <p><i class="fas fa-envelope"></i> admin@libraiot.com</p>
+                <p><a href="t&c.html" style="color: inherit; text-decoration: none;"><i
+                        class="fas fa-file-contract"></i> Terms & Conditions</a></p>
+            </div>
+            <div class="footer-section">
+                <p><i class="fas fa-map-marker-alt"></i> 420, Nala Sopara</p>
+                <p>7th Floor, Mumbai, IN</p>
+                <p>401201</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Project LIBRAIOT. All rights reserved.</p>
+        </div>
+    </footer>
+</main>
+
+<script>
+    // Sidebar toggle functionality
+    document.addEventListener('DOMContentLoaded', function () {
+        const sidebar = document.querySelector('.sidebar');
+        const sidebarToggle = document.querySelector('.sidebar-toggle');
+        const mainContent = document.querySelector('.main-content');
+
+        sidebarToggle.addEventListener('click', function () {
+            sidebar.classList.toggle('collapsed');
+            mainContent.classList.toggle('expanded');
+        });
+
+        // User dropdown functionality
+        const userMenuToggle = document.querySelector('.user-menu-toggle');
+        const userDropdown = document.querySelector('.user-dropdown');
+
+        userMenuToggle.addEventListener('click', function (e) {
+            e.preventDefault();
+            userDropdown.classList.toggle('active');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function (e) {
+            if (!e.target.closest('.user-menu-toggle') && !e.target.closest('.user-dropdown')) {
+                userDropdown.classList.remove('active');
+            }
+        });
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Get all relevant elements using multiple selectors to catch all possibilities
+        const inputs = document.querySelectorAll('input[type="search"], input[type="text"], .search-input input');
+        const selects = document.querySelectorAll('select, .filter-select');
+        const buttons = document.querySelectorAll('button, .search-button, .add-user-button, .btn');
+
+        // Apply height and alignment
+        inputs.forEach(el => {
+            el.style.height = '45px';
+            el.style.lineHeight = '45px';
+            el.style.padding = '0 15px';
+            el.style.borderRadius = '5px';
+            el.style.boxSizing = 'border-box';
+        });
+
+        selects.forEach(el => {
+            el.style.height = '45px';
+            el.style.lineHeight = '45px';
+            el.style.padding = '0 15px';
+            el.style.borderRadius = '5px';
+            el.style.boxSizing = 'border-box';
+        });
+
+        buttons.forEach(el => {
+            el.style.height = '45px';
+            el.style.display = 'inline-flex';
+            el.style.alignItems = 'center';
+            el.style.justifyContent = 'center';
+            el.style.borderRadius = '5px';
+            el.style.boxSizing = 'border-box';
+        });
+
+        // Adjust search button if it exists
+        const searchBtn = document.querySelector('.search-button');
+        if (searchBtn) {
+            searchBtn.style.width = '45px';
+            searchBtn.style.padding = '0';
+        }
+    });
+
+    // Run the same process whenever new content is loaded (for dynamic content)
+    const observer = new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+            if (mutation.addedNodes.length) {
+                // Re-run our code to catch new elements
+                document.querySelectorAll('input[type="search"], input[type="text"], .search-input input').forEach(el => {
+                    el.style.height = '45px';
+                    el.style.lineHeight = '45px';
+                    el.style.padding = '0 15px';
+                    el.style.borderRadius = '5px';
+                    el.style.boxSizing = 'border-box';
+                });
+                // (Similar code for selects and buttons would go here)
+            }
+        });
+    });
+
+    // Start observing for dynamic content changes
+    observer.observe(document.body, {childList: true, subtree: true});
+</script>
+</body>
+</html>
