@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project LIBRAIOT - Discover the Future of Libraries</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="script.js" type=module defer></script>
+    <script src="route-protector.js" type="module" defer></script>
+    <script src="auth-handler.js" type="module" defer></script>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">LIBRAIOT</div>
+        <div class="nav-links">
+            <a href="#hero" class="nav-link">Home</a>
+            <a href="#about" class="nav-link">About Us</a>
+            <a href="#articles" class="nav-link">Articles</a>
+            <a href="#collections" class="nav-link">Collections</a>
+            <a href="#contact" class="nav-link">Contact Us</a>
+        </div>
+        <div class="nav-icons">
+            <a href="#" class="nav-icon">
+                <i class="fas fa-search"></i>
+            </a>
+            <a href="#" class="nav-icon menu-toggle-container">
+                <i class="fas fa-bars menu-toggle"></i>
+            </a>
+            <a href="#" class="nav-icon user-icon">
+                <i class="fas fa-user"></i>
+            </a>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu glass-effect">
+            <a href="#hero">Home</a>
+            <a href="#articles">Articles</a>
+            <a href="#collections">Collections</a>
+            <a href="#about">About Us</a>
+            <div class="mobile-menu-extras">
+                <a href="#"><i class="fas fa-search"></i> Search</a>
+                <a href="collection.html"><i class="fas fa-bookmark"></i> Book Collection</a>
+                <a href="#"><i class="fas fa-book"></i> My Library</a>
+                <a href="#"><i class="fas fa-cog"></i> Settings</a>
+            </div>
+        </div>
+
+        <!-- User Dropdown -->
+        <div class="user-dropdown glass-effect">
+            <div class="dropdown-header">
+                <i class="fas fa-user-circle"></i>
+                <span>Account</span>
+            </div>
+            <div class="dropdown-divider"></div>
+            <a href="signin.html" class="dropdown-item"><i class="fas fa-sign-in-alt"></i> Sign In</a>
+            <a href="signup.html" class="dropdown-item"><i class="fas fa-user-plus"></i> Sign Up</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="hero-content glass-effect">
+            <h1>WELCOME TO<br>LIBRAIOT</h1>
+            <p>Discover the Future of Libraries</p>
+            <button class="button">Get Started</button>
+        </div>
+        <div class="image-grid">
+            <div class="image-item">
+                <img src="Home%20_%20Project%20Libraiot_files/1.jpg" alt="Book with Cinema Pictures text">
+            </div>
+            <div class="image-item">
+                <img src="Home%20_%20Project%20Libraiot_files/2.jpg" alt="Open book">
+            </div>
+            <div class="image-item">
+                <img src="Home%20_%20Project%20Libraiot_files/3.jpg" alt="Reading area">
+            </div>
+            <div class="image-item">
+                <img src="Home%20_%20Project%20Libraiot_files/4.jpg" alt="Stack of books with plant">
+            </div>
+            <div class="image-item">
+                <img src="Home%20_%20Project%20Libraiot_files/5.jpg" alt="Person reading">
+            </div>
+            <div class="image-item">
+                <img src="Home%20_%20Project%20Libraiot_files/6.jpg" alt="Open book close-up">
+            </div>
+        </div>
+    </section>
+
+    <!-- Discover Section -->
+    <section id="about" class="discover">
+        <div class="discover-content glass-effect">
+            <h2>Discover Your Next<br>Read</h2>
+            <p>Explore the world of literature with Project LIBRAIOT. Our library offers a vast collection of books, from classic novels to the latest bestsellers. Whether you're a fiction enthusiast or a non-fiction connoisseur, we have something for everyone. Immerse yourself in captivating stories and enrich your knowledge with our diverse selection.</p>
+            <a href="collection.html"><button class="button dark">Browse</button></a>
+        </div>
+    </section>
+
+    <!-- Articles Section -->
+    <section id="articles" class="articles">
+        <h2>ARTICLES</h2>
+        <div class="article-grid">
+            <div class="article-card glass-effect">
+                <img src="Home%20_%20Project%20Libraiot_files/7.webp" alt="Futuristic library with teal lighting">
+                <h3>Revolutionizing Libraries</h3>
+                <p>Libraries have always been a cornerstone of education and knowledge sharing. Discover how we're taking this to the next level.</p>
+                <div class="article-footer">
+                    <span class="views"><i class="fas fa-eye"></i> 243</span>
+                    <button class="like-button"><i class="fas fa-heart"></i></button>
+                </div>
+            </div>
+            <div class="article-card glass-effect">
+                <img src="Home%20_%20Project%20Libraiot_files/8.webp" alt="Modern library with teal lighting">
+                <h3>Enhancing User Experience</h3>
+                <p>Libraries have always been a repository of knowledge and learning. See how we're making them more accessible and enjoyable.</p>
+                <div class="article-footer">
+                    <span class="views"><i class="fas fa-eye"></i> 187</span>
+                    <button class="like-button"><i class="fas fa-heart"></i></button>
+                </div>
+            </div>
+            <div class="article-card glass-effect">
+                <img src="Home%20_%20Project%20Libraiot_files/9.webp" alt="Library aisle with teal lighting">
+                <h3>Optimizing Library Management</h3>
+                <p>Libraries have long been a cornerstone of education and culture. Learn about our innovative management solutions.</p>
+                <div class="article-footer">
+                    <span class="views"><i class="fas fa-eye"></i> 156</span>
+                    <button class="like-button"><i class="fas fa-heart"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Collections Section -->
+    <section id="collections" class="collections">
+        <h2>COLLECTIONS</h2>
+        <p class="subtitle">Explore Our Diverse Collection</p>
+        <p>Project LIBRAIOT offers a wide range of collections, from classic literature to modern bestsellers. Dive into our library and discover a world of knowledge awaiting for you.</p>
+
+        <div class="collection-grid">
+            <div class="collection-item glass-effect">
+                <img src="Home%20_%20Project%20Libraiot_files/10.webp" alt="Traditional library with wooden furniture">
+                <div class="collection-info">
+                    <h3>Fiction</h3>
+                    <p>Immerse yourself in captivating stories that will transport you to different worlds and ignite your imagination.</p>
+                </div>
+            </div>
+            <div class="collection-item glass-effect">
+                <img src="Home%20_%20Project%20Libraiot_files/11.webp" alt="Illustrated books with orange background">
+                <div class="collection-info">
+                    <h3>Non-Fiction</h3>
+                    <p>Expand your knowledge with our non-fiction collection covering a variety of topics from science to history and beyond.</p>
+                </div>
+            </div>
+            <div class="collection-item glass-effect">
+                <img src="Home%20_%20Project%20Libraiot_files/12.jpg" alt="Classic library with long aisle">
+                <div class="collection-info">
+                    <h3>Children's Books</h3>
+                    <p>Introduce your little ones to the joy of reading with our colorful and educational children's books.</p>
+                </div>
+            </div>
+        </div>
+
+        <a href="collection.html"><button class="button light">View All</button></a>
+    </section>
+
+    <!-- Footer -->
+    <section id="contact" class="contact">
+    <footer class="glass-effect">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>PROJECT LIBRAIOT</h3>
+            </div>
+            <div class="footer-section">
+                <p><i class="fas fa-phone"></i> 921-142-0420</p>
+                <p><i class="fas fa-envelope"></i> info@libraiot.com</p>
+                <p><a href="t&c.html" style="color: inherit; text-decoration: none;"><i class="fas fa-file-contract"></i> Terms & Conditions</a></p>
+            </div>
+            <div class="footer-section">
+                <p><i class="fas fa-map-marker-alt"></i> 420, Nala Sopara</p>
+                <p>7th Floor, Mumbai, IN</p>
+                <p>401201</p>
+            </div>
+            <div class="footer-section newsletter">
+                <h3>Subscribe to Our Newsletter</h3>
+                <div class="newsletter-form">
+                    <input type="email" placeholder="Enter Your Email *" required>
+                    <button class="button">Subscribe</button>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Project LIBRAIOT. All rights reserved.</p>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+    </footer>
+    </section>
+</body>
+</html>

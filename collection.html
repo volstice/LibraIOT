@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Collection - Project LIBRAIOT</title>
+    <link rel="stylesheet" href="collection-style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Add type="module" to use import statements -->
+    <script src="collection.js" type="module" defer></script>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">LIBRAIOT</div>
+        <div class="nav-links">
+            <a href="main.html#hero" class="nav-link">Home</a>
+            <a href="main.html#collections" class="nav-link">Collections</a>
+            <a href="main.html#articles" class="nav-link">Articles</a>
+            <a href="main.html#about" class="nav-link">About Us</a>
+        </div>
+        <div class="nav-icons">
+            <a href="#" class="nav-icon search-toggle">
+                <i class="fas fa-search"></i>
+            </a>
+            <a href="#" class="nav-icon menu-toggle-container">
+                <i class="fas fa-bars menu-toggle"></i>
+            </a>
+            <a href="#" class="nav-icon user-icon">
+                <i class="fas fa-user"></i>
+            </a>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu glass-effect">
+            <a href="main.html#hero" >Home</a>
+            <a href="main.html#collections">Collections</a>
+            <a href="main.html#articles">Articles</a>
+            <a href="main.html#about">About Us</a>
+            <div class="mobile-menu-extras">
+                <a href="#"><i class="fas fa-search"></i> Search</a>
+                <a href="#"><i class="fas fa-bookmark"></i> Saved Items</a>
+                <a href="#"><i class="fas fa-book"></i> My Library</a>
+                <a href="#"><i class="fas fa-cog"></i> Settings</a>
+            </div>
+        </div>
+
+        <!-- User Dropdown -->
+        <div class="user-dropdown glass-effect">
+            <div class="dropdown-header">
+                <i class="fas fa-user-circle"></i>
+                <span id="userDisplayName">Account</span>
+            </div>
+            <div class="dropdown-divider"></div>
+            <div id="guest-options">
+                <a href="signin.html" class="dropdown-item"><i class="fas fa-sign-in-alt"></i> Sign In</a>
+                <a href="signup.html" class="dropdown-item"><i class="fas fa-user-plus"></i> Sign Up</a>
+            </div>
+            <div id="user-options" style="display: none;">
+                <a href="#" class="dropdown-item"><i class="fas fa-book"></i> My Library</a>
+                <a href="#" class="dropdown-item"><i class="fas fa-bookmark"></i> Saved Books</a>
+                <a href="#" class="dropdown-item"><i class="fas fa-cog"></i> Settings</a>
+                <a href="#" class="dropdown-item" id="signOutBtn"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Overlay -->
+    <div class="search-overlay">
+        <div class="search-container glass-effect">
+            <div class="search-header">
+                <h2>Search Books</h2>
+                <button class="close-search"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search by title, author, or ISBN...">
+                <button id="searchBtn"><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Collection Header Section -->
+    <section class="collection-header">
+        <div class="container">
+            <h1>Book Collection</h1>
+            <p>Discover our curated selection of books</p>
+
+            <!-- Filter and Search Controls -->
+            <div class="collection-controls">
+                <div class="search-inline">
+                    <input type="text" id="inlineSearchInput" placeholder="Quick search...">
+                    <button id="inlineSearchBtn"><i class="fas fa-search"></i></button>
+                </div>
+
+                <div class="filter-container">
+                    <div class="filter-dropdown">
+                        <button class="filter-button">
+                            <i class="fas fa-filter"></i> Filter
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="filter-options glass-effect">
+                            <div class="filter-group">
+                                <h4>Genres</h4>
+                                <div id="genreFilters" class="filter-checkboxes">
+                                    <!-- Genre checkboxes will be added dynamically via JavaScript -->
+                                </div>
+                            </div>
+                            <div class="filter-actions">
+                                <button id="applyFilters" class="button filter-btn">Apply</button>
+                                <button id="clearFilters" class="button filter-btn clear">Clear All</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sort-dropdown">
+                        <button class="sort-button">
+                            <i class="fas fa-sort"></i> Sort
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="sort-options glass-effect">
+                            <div class="sort-option" data-sort="title" data-direction="asc">
+                                <i class="fas fa-sort-alpha-down"></i> Title A-Z
+                            </div>
+                            <div class="sort-option" data-sort="title" data-direction="desc">
+                                <i class="fas fa-sort-alpha-up"></i> Title Z-A
+                            </div>
+                            <div class="sort-option" data-sort="addedDate" data-direction="desc">
+                                <i class="fas fa-calendar-alt"></i> Newest First
+                            </div>
+                            <div class="sort-option" data-sort="addedDate" data-direction="asc">
+                                <i class="fas fa-calendar-alt"></i> Oldest First
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Auth Check Message -->
+    <div id="authCheckMessage" class="auth-check-message glass-effect" style="display: none;">
+        <div class="auth-message-content">
+            <i class="fas fa-lock"></i>
+            <h2>Sign In Required</h2>
+            <p>Please sign in to view our book collection.</p>
+            <div class="auth-buttons">
+                <a href="signin.html" class="button">Sign In</a>
+                <a href="signup.html" class="button">Create Account</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Indicator -->
+    <div id="loadingIndicator" class="loading-indicator">
+        <div class="spinner"></div>
+        <p>Loading books...</p>
+    </div>
+
+    <!-- Books Collection Section -->
+    <section id="booksCollection" class="books-collection">
+        <div class="container">
+            <div id="booksGrid" class="books-grid">
+                <!-- Books will be added dynamically via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- No Results Message -->
+    <div id="noResultsMessage" class="no-results-message" style="display: none;">
+        <i class="fas fa-search"></i>
+        <h3>No books found</h3>
+        <p>Try adjusting your search or filters</p>
+        <button id="resetSearchBtn" class="button">Reset Search</button>
+    </div>
+
+    <!-- Footer -->
+    <footer class="glass-effect">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>PROJECT LIBRAIOT</h3>
+            </div>
+            <div class="footer-section">
+                <p><i class="fas fa-phone"></i> 921-142-0420</p>
+                <p><i class="fas fa-envelope"></i> info@libraiot.com</p>
+                 <p><a href="t&c.html" style="color: inherit; text-decoration: none;"><i class="fas fa-file-contract"></i> Terms & Conditions</a></p>
+            </div>
+            <div class="footer-section">
+                <p><i class="fas fa-map-marker-alt"></i> 420, Nala Sopara</p>
+                <p>7th Floor, Mumbai, IN</p>
+                <p>401201</p>
+            </div>
+            <div class="footer-section newsletter">
+                <h3>Subscribe to Our Newsletter</h3>
+                <div class="newsletter-form">
+                    <input type="email" placeholder="Enter Your Email *" required>
+                    <button class="button">Subscribe</button>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Project LIBRAIOT. All rights reserved.</p>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

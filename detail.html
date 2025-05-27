@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Details - Project LIBRAIOT</title>
+    <link rel="stylesheet" href="detail-style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Add type="module" to use import statements -->
+    <script src="detail.js" type="module" defer></script>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">LIBRAIOT</div>
+        <div class="nav-links">
+            <a href="main.html#hero" class="nav-link">Home</a>
+            <a href="main.html#collections" class="nav-link">Collections</a>
+            <a href="main.html#articles" class="nav-link">Articles</a>
+            <a href="main.html#about" class="nav-link">About Us</a>
+        </div>
+        <div class="nav-icons">
+            <a href="#" class="nav-icon">
+                <i class="fas fa-search"></i>
+            </a>
+            <a href="#" class="nav-icon menu-toggle-container">
+                <i class="fas fa-bars menu-toggle"></i>
+            </a>
+            <a href="my-library.html" class="nav-icon">
+                <i class="fas fa-book"></i>
+            </a>
+            <a href="#" class="nav-icon user-icon">
+                <i class="fas fa-user"></i>
+            </a>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu glass-effect">
+            <a href="main.html#hero">Home</a>
+            <a href="main.html#collections">Collections</a>
+            <a href="main.html#articles">Articles</a>
+            <a href="main.html#about">About Us</a>
+            <div class="mobile-menu-extras">
+                <a href="#"><i class="fas fa-search"></i> Search</a>
+                <a href="my-library.html"><i class="fas fa-bookmark"></i> My Library</a>
+                <a href="#"><i class="fas fa-cog"></i> Settings</a>
+            </div>
+        </div>
+
+        <!-- User Dropdown -->
+        <div class="user-dropdown glass-effect">
+            <div class="dropdown-header">
+                <i class="fas fa-user-circle"></i>
+                <span id="userDisplayName">Account</span>
+            </div>
+            <div class="dropdown-divider"></div>
+            <a href="my-library.html" class="dropdown-item"><i class="fas fa-book"></i> My Library</a>
+            <a href="account-settings.html" class="dropdown-item"><i class="fas fa-cog"></i> Settings</a>
+            <a href="#" class="dropdown-item" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
+        </div>
+    </nav>
+
+    <!-- Book Detail Section -->
+    <section class="book-detail-section">
+        <div class="book-detail-container glass-effect">
+            <!-- Loading indicator -->
+            <div id="loadingIndicator" class="loading-indicator">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p>Loading book details...</p>
+            </div>
+
+            <!-- Book details will be inserted here by JavaScript -->
+            <div id="bookDetailsContent" class="book-details-content" style="display: none;">
+                <div class="book-header">
+                    <div class="book-image-container">
+                        <img id="bookCover" src="" alt="Book Cover" class="book-cover">
+                    </div>
+                    <div class="book-info">
+                        <h1 id="bookTitle" class="book-title"></h1>
+                        <div id="bookAuthors" class="book-authors"></div>
+                        <div class="book-rating">
+                            <div id="bookRating" class="stars"></div>
+                            <span id="ratingCount"></span>
+                        </div>
+                        <div class="book-actions">
+                            <button id="addToLibraryBtn" class="action-button primary">
+                                <i class="fas fa-book"></i> Add to Library
+                            </button>
+                            <button id="favoriteBtn" class="action-button secondary">
+                                <i class="far fa-heart"></i> Favorite
+                            </button>
+                            <button id="shareBtn" class="action-button secondary">
+                                <i class="fas fa-share-alt"></i> Share
+                            </button>
+                        </div>
+                        <div class="book-metadata">
+                            <div class="metadata-item">
+                                <span class="label">Publisher:</span>
+                                <span id="publisher"></span>
+                            </div>
+                            <div class="metadata-item">
+                                <span class="label">Published:</span>
+                                <span id="publishDate"></span>
+                            </div>
+                            <div class="metadata-item">
+                                <span class="label">Pages:</span>
+                                <span id="pageCount"></span>
+                            </div>
+                            <div class="metadata-item">
+                                <span class="label">ISBN:</span>
+                                <span id="isbn"></span>
+                            </div>
+                            <div class="metadata-item">
+                                <span class="label">Language:</span>
+                                <span id="language"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="book-content">
+                    <div class="tabs">
+                        <button class="tab-button active" data-tab="description">Description</button>
+                        <button class="tab-button" data-tab="details">Details</button>
+                        <button class="tab-button" data-tab="reviews">Reviews</button>
+                        <button class="tab-button" data-tab="related">Related Books</button>
+                    </div>
+
+                    <div class="tab-content">
+                        <div id="description" class="tab-pane active">
+                            <h3>Description</h3>
+                            <p id="bookDescription"></p>
+                        </div>
+
+                        <div id="details" class="tab-pane">
+                            <h3>Book Details</h3>
+                            <table class="details-table">
+                                <tbody id="detailsTableBody">
+                                    <!-- Details will be inserted here by JavaScript -->
+                                </tbody>
+                            </table>
+
+                            <div class="genres-section">
+                                <h4>Genres</h4>
+                                <div id="genresList" class="genres-list"></div>
+                            </div>
+                        </div>
+
+                        <div id="reviews" class="tab-pane">
+                            <h3>Reader Reviews</h3>
+                            <div class="reviews-header">
+                                <div id="overallRating" class="overall-rating">
+                                    <div class="big-rating"></div>
+                                    <p><span id="avgRating"></span> out of 5</p>
+                                    <p><span id="totalReviews"></span> reviews</p>
+                                </div>
+                                <div class="add-review">
+                                    <button id="writeReviewBtn" class="button review-button">
+                                        <i class="fas fa-pen"></i> Write a Review
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="reviewsList" class="reviews-list">
+                                <!-- Reviews will be inserted here by JavaScript -->
+                            </div>
+
+                            <!-- Review Form (Hidden by default) -->
+                            <div id="reviewForm" class="review-form glass-effect" style="display: none;">
+                                <h4>Write Your Review</h4>
+                                <div class="rating-input">
+                                    <span>Your Rating:</span>
+                                    <div class="star-rating">
+                                        <i class="far fa-star" data-rating="1"></i>
+                                        <i class="far fa-star" data-rating="2"></i>
+                                        <i class="far fa-star" data-rating="3"></i>
+                                        <i class="far fa-star" data-rating="4"></i>
+                                        <i class="far fa-star" data-rating="5"></i>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="reviewTitle">Review Title:</label>
+                                    <input type="text" id="reviewTitle" placeholder="Summarize your thoughts">
+                                </div>
+                                <div class="form-group">
+                                    <label for="reviewText">Your Review:</label>
+                                    <textarea id="reviewText" rows="5" placeholder="What did you like or dislike? What did you use this product for?"></textarea>
+                                </div>
+                                <div class="review-actions">
+                                    <button id="submitReviewBtn" class="button">Submit Review</button>
+                                    <button id="cancelReviewBtn" class="button secondary">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="related" class="tab-pane">
+                            <h3>Related Books</h3>
+                            <div id="relatedBooks" class="related-books-grid">
+                                <!-- Related books will be inserted here by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Error message display -->
+            <div id="errorMessage" class="error-message" style="display: none;">
+                <i class="fas fa-exclamation-circle"></i>
+                <p>Sorry, we couldn't find the book you're looking for.</p>
+                <a href="main.html" class="button">Return to Home</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Share Modal -->
+    <div id="shareModal" class="modal">
+        <div class="modal-content glass-effect">
+            <span class="close-modal">&times;</span>
+            <h3>Share This Book</h3>
+            <div class="share-options">
+                <a href="#" class="share-option facebook">
+                    <i class="fab fa-facebook-f"></i>
+                    <span>Facebook</span>
+                </a>
+                <a href="#" class="share-option twitter">
+                    <i class="fab fa-twitter"></i>
+                    <span>Twitter</span>
+                </a>
+                <a href="#" class="share-option pinterest">
+                    <i class="fab fa-pinterest"></i>
+                    <span>Pinterest</span>
+                </a>
+                <a href="#" class="share-option email">
+                    <i class="fas fa-envelope"></i>
+                    <span>Email</span>
+                </a>
+            </div>
+            <div class="share-link">
+                <input type="text" id="shareLink" readonly>
+                <button id="copyLinkBtn" class="button">Copy Link</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast notification for user feedback -->
+    <div id="toast" class="toast">
+        <div class="toast-content">
+            <i id="toastIcon" class="fas fa-check-circle"></i>
+            <span id="toastMessage">Action completed successfully!</span>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="glass-effect">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>PROJECT LIBRAIOT</h3>
+            </div>
+            <div class="footer-section">
+                <p><i class="fas fa-phone"></i> 921-142-0420</p>
+                <p><i class="fas fa-envelope"></i> info@libraiot.com</p>
+                <p><a href="t&c.html" style="color: inherit; text-decoration: none;"><i class="fas fa-file-contract"></i> Terms & Conditions</a></p>
+            </div>
+            <div class="footer-section">
+                <p><i class="fas fa-map-marker-alt"></i> 420, Nala Sopara</p>
+                <p>7th Floor, Mumbai, IN</p>
+                <p>401201</p>
+            </div>
+            <div class="footer-section newsletter">
+                <h3>Subscribe to Our Newsletter</h3>
+                <div class="newsletter-form">
+                    <input type="email" placeholder="Enter Your Email *" required>
+                    <button class="button">Subscribe</button>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Project LIBRAIOT. All rights reserved.</p>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

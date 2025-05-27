@@ -1,0 +1,305 @@
+// auth-handler.js
+import { auth, onAuthStateChanged, signOut } from './firebase-config.js';
+
+// Wait for DOM to be fully loaded before doing anything
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM fully loaded, initializing auth handler');
+
+    // Get DOM elements
+    const userIcon = document.querySelector('.user-icon');
+    const userDropdown = document.querySelector('.user-dropdown');
+    const mobileMenu = document.querySelector('.mobile-menu');
+    const menuToggle = document.querySelector('.menu-toggle-container');
+
+    // Debug output of elements
+    console.log('User icon element:', userIcon);
+    console.log('User dropdown element:', userDropdown);
+    console.log('Mobile menu element:', mobileMenu);
+    console.log('Menu toggle element:', menuToggle);
+
+    // Fix for user icon click
+    if (userIcon) {
+        userIcon.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('User icon clicked');
+
+            // Toggle the dropdown
+            if (userDropdown) {
+                userDropdown.classList.toggle('active');
+                userDropdown.classList.toggle('show'); // Added for compatibility with new code
+                console.log('Dropdown toggled, active:', userDropdown.classList.contains('active'));
+
+                // Close mobile menu if open
+                if (mobileMenu && mobileMenu.classList.contains('active')) {
+                    mobileMenu.classList.remove('active');
+                    const menuToggleIcon = document.querySelector('.menu-toggle');
+                    if (menuToggleIcon) {
+                        menuToggleIcon.classList.remove('fa-times');
+                        menuToggleIcon.classList.add('fa-bars');
+                    }
+                }
+
+                // Close dropdown when clicking outside (from new code)
+                document.addEventListener('click', function closeDropdown(event) {
+                    if (!userIcon.contains(event.target) && !userDropdown.contains(event.target)) {
+                        userDropdown.classList.remove('active');
+                        userDropdown.classList.remove('show');
+                        document.removeEventListener('click', closeDropdown);
+                        console.log('Closed user dropdown (clicked outside - event listener)');
+                    }
+                });
+            }
+        });
+    } else {
+        console.error('User icon not found');
+    }
+
+    // Fix for hamburger menu
+    if (menuToggle && mobileMenu) {
+        menuToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Menu toggle clicked');
+
+            // Toggle the mobile menu
+            mobileMenu.classList.toggle('active');
+            console.log('Mobile menu toggled, active:', mobileMenu.classList.contains('active'));
+
+            // Toggle the icon
+            const iconElement = this.querySelector('.menu-toggle');
+
+            if (iconElement) {
+                if (mobileMenu.classList.contains('active')) {
+                    iconElement.classList.remove('fa-bars');
+                    iconElement.classList.add('fa-times');
+                } else {
+                    iconElement.classList.remove('fa-times');
+                    iconElement.classList.add('fa-bars');
+                }
+            }
+
+            // Close user dropdown if open
+            if (userDropdown && (userDropdown.classList.contains('active') || userDropdown.classList.contains('show'))) {
+                userDropdown.classList.remove('active');
+                userDropdown.classList.remove('show');
+            }
+        });
+    } else {
+        console.error('Hamburger menu or toggle not found');
+    }
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+        // Close user dropdown when clicking outside
+        if (userDropdown && (userDropdown.classList.contains('active') || userDropdown.classList.contains('show'))) {
+            const isClickInsideUserDropdown = userDropdown.contains(e.target) ||
+                                            (userIcon && userIcon.contains(e.target));
+
+            if (!isClickInsideUserDropdown) {
+                userDropdown.classList.remove('active');
+                userDropdown.classList.remove('show');
+                console.log('Closed user dropdown (clicked outside)');
+            }
+        }
+
+        // Close mobile menu when clicking outside
+        if (mobileMenu && mobileMenu.classList.contains('active')) {
+            const isClickInsideMobileMenu = mobileMenu.contains(e.target) ||
+                                           (menuToggle && menuToggle.contains(e.target));
+
+            if (!isClickInsideMobileMenu) {
+                mobileMenu.classList.remove('active');
+                console.log('Closed mobile menu (clicked outside)');
+
+                const menuToggleIcon = document.querySelector('.menu-toggle');
+                if (menuToggleIcon) {
+                    menuToggleIcon.classList.remove('fa-times');
+                    menuToggleIcon.classList.add('fa-bars');
+                }
+            }
+        }
+    });
+
+    // Listen for authentication state changes
+    console.log('Setting up auth state listener');
+    onAuthStateChanged(auth, (user) => {
+        console.log('Auth state changed:', user ? `User signed in: ${user.email}` : 'User signed out');
+        updateUserDropdown(user);
+        updateMobileMenu(user);
+    });
+});
+
+// Update the user dropdown based on authentication state - enhanced with new code
+function updateUserDropdown(user) {
+    console.log('Updating user dropdown with user:', user ? user.email : 'no user');
+
+    const userDropdown = document.querySelector('.user-dropdown');
+    if (!userDropdown) {
+        console.error('User dropdown not found for updating');
+        return;
+    }
+
+    if (user) {
+        // User is signed in, show authenticated options with enhanced template from new code
+        userDropdown.innerHTML = `
+            <div class="dropdown-header">
+                <i class="fas fa-user-circle"></i><span>Account</span>
+            </div>
+            <div class="dropdown-divider"></div>
+            <div class="user-info">
+                <div class="avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div>
+                    <p class="username">${user.displayName || 'User'}</p>
+                    <p class="email">${user.email}</p>
+                </div>
+            </div>
+            <div class="dropdown-divider"></div>
+            <a href="profile.html" class="dropdown-item"><i class="fas fa-id-card"></i> Profile</a>
+            <a href="#" class="dropdown-item"><i class="fas fa-book"></i> My Library</a>
+            <a href="#" class="dropdown-item"><i class="fas fa-bookmark"></i> Saved Items</a>
+            <a href="settings.html" class="dropdown-item"><i class="fas fa-cog"></i> Settings</a>
+            <div class="dropdown-divider"></div>
+            <a href="#" id="signOutLink" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
+        `;
+
+        // Add sign out functionality
+        document.getElementById('signOutLink').addEventListener('click', handleSignOut);
+    } else {
+        // User is not signed in, show authentication options
+        userDropdown.innerHTML = `
+            <div class="dropdown-header">
+                <i class="fas fa-user-circle"></i><span>Account</span>
+            </div>
+            <div class="dropdown-divider"></div>
+            <a href="signin.html" class="dropdown-item"><i class="fas fa-sign-in-alt"></i> Sign In</a>
+            <a href="signup.html" class="dropdown-item"><i class="fas fa-user-plus"></i> Create Account</a>
+        `;
+    }
+
+    console.log('User dropdown updated');
+}
+
+// Update the mobile menu based on authentication state
+function updateMobileMenu(user) {
+    console.log('Updating mobile menu with user:', user ? user.email : 'no user');
+
+    const mobileMenuExtras = document.querySelector('.mobile-menu-extras');
+    if (!mobileMenuExtras) {
+        console.error('Mobile menu extras not found for updating');
+        return;
+    }
+
+    // Look for existing authentication links
+    const existingSignOutLink = mobileMenuExtras.querySelector('a[href="#signout"]');
+    const existingSignInLink = mobileMenuExtras.querySelector('a[href="signin.html"]');
+    const existingSignUpLink = mobileMenuExtras.querySelector('a[href="signup.html"]');
+
+    if (user) {
+        // User is signed in
+
+        // Add sign out link if it doesn't exist
+        if (!existingSignOutLink) {
+            const signOutLink = document.createElement('a');
+            signOutLink.href = "#signout";
+            signOutLink.innerHTML = '<i class="fas fa-sign-out-alt"></i> Sign Out';
+            signOutLink.addEventListener('click', handleSignOut);
+            mobileMenuExtras.appendChild(signOutLink);
+        }
+
+        // Remove sign in/up links if they exist
+        if (existingSignInLink) mobileMenuExtras.removeChild(existingSignInLink);
+        if (existingSignUpLink) mobileMenuExtras.removeChild(existingSignUpLink);
+    } else {
+        // User is not signed in
+
+        // Remove sign out link if it exists
+        if (existingSignOutLink) mobileMenuExtras.removeChild(existingSignOutLink);
+
+        // Add sign in link if it doesn't exist
+        if (!existingSignInLink) {
+            const signInLink = document.createElement('a');
+            signInLink.href = "signin.html";
+            signInLink.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
+            mobileMenuExtras.appendChild(signInLink);
+        }
+
+        // Add sign up link if it doesn't exist
+        if (!existingSignUpLink) {
+            const signUpLink = document.createElement('a');
+            signUpLink.href = "signup.html";
+            signUpLink.innerHTML = '<i class="fas fa-user-plus"></i> Sign Up';
+            mobileMenuExtras.appendChild(signUpLink);
+        }
+    }
+
+    console.log('Mobile menu updated');
+}
+
+// Sign out function
+async function handleSignOut(e) {
+    e.preventDefault();
+    console.log('Sign out initiated');
+
+    try {
+        await signOut(auth);
+        showMessage('You have been signed out successfully');
+
+        // Close the dropdown and mobile menu
+        const userDropdown = document.querySelector('.user-dropdown');
+        const mobileMenu = document.querySelector('.mobile-menu');
+
+        if (userDropdown) {
+            userDropdown.classList.remove('active');
+            userDropdown.classList.remove('show');
+        }
+
+        if (mobileMenu && mobileMenu.classList.contains('active')) {
+            mobileMenu.classList.remove('active');
+            const menuToggle = document.querySelector('.menu-toggle');
+            if (menuToggle) {
+                menuToggle.classList.remove('fa-times');
+                menuToggle.classList.add('fa-bars');
+            }
+        }
+
+        // Redirect to main page
+        setTimeout(() => {
+            window.location.href = 'main.html';
+        }, 1500);
+    } catch (error) {
+        console.error('Error signing out:', error);
+        showMessage('Error signing out: ' + error.message, true);
+    }
+}
+
+// Helper function to display status messages
+function showMessage(message, isError = false) {
+    console.log(`Showing message: ${message}, isError: ${isError}`);
+
+    // Create status message element if it doesn't exist
+    let statusMessage = document.getElementById('statusMessage');
+    if (!statusMessage) {
+        statusMessage = document.createElement('div');
+        statusMessage.id = 'statusMessage';
+        statusMessage.style.position = 'fixed';
+        statusMessage.style.top = '100px';
+        statusMessage.style.left = '50%';
+        statusMessage.style.transform = 'translateX(-50%)';
+        statusMessage.style.padding = '10px 20px';
+        statusMessage.style.borderRadius = '5px';
+        statusMessage.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+        statusMessage.style.zIndex = '1000';
+        document.body.appendChild(statusMessage);
+    }
+
+    statusMessage.textContent = message;
+    statusMessage.style.color = isError ? 'rgba(255, 50, 50, 0.8)' : '#0ff';
+
+    // Clear message after 5 seconds
+    setTimeout(() => {
+        statusMessage.textContent = '';
+    }, 5000);
+}
